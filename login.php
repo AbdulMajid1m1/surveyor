@@ -90,7 +90,7 @@
 <body>
 	<div class="main-container">
 		<div class="card-header" style="text-align: center;">
-			Online Survey System
+			Come and Join Our Survey Team
 			<div style="margin-bottom: 20px;"></div>
 			<ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
 				<li class="nav-item" role="presentation" style="margin-right: 10px;">
@@ -126,9 +126,15 @@
 						<label for="last_name">Last Name</label>
 						<input type="text" id="last_name" name="last_name" class="form-control" required>
 					</div>
+
 					<div class="form-group">
 						<label for="mobile_number">Mobile Number</label>
 						<input type="text" id="mobile_number" name="mobile_number" class="form-control" required>
+					</div>
+					<div class="form-group">
+						<label for="signup_password">Password</label>
+						<input type="password" id="signup_password" name="signup_password" class="form-control"
+							required>
 					</div>
 					<input type="hidden" name="action" value="save">
 					<button type="button" id="save_button" class="btn btn-primary btn-block">Save</button>
@@ -158,7 +164,7 @@
 						<label for="login_password">Password</label>
 						<input type="password" id="login_password" name="login_password" class="form-control" required>
 					</div>
-					<button type="button" id="login_button" class="btn btn-primary btn-block">Login</button>
+					<button type="submit" id="login_button" class="btn btn-primary btn-block">Login</button>
 				</form>
 			</div>
 		</div>
@@ -171,6 +177,38 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 	<script>
+
+		$('#login_form').submit(function (e) {
+			e.preventDefault()
+			$('#login-form button[type="button"]').attr('disabled', true).html('Logging in...');
+			if ($(this).find('.alert-danger').length > 0)
+				$(this).find('.alert-danger').remove();
+			$.ajax({
+				url: 'ajax.php?action=login',
+				method: 'POST',
+				data: $(this).serialize(),
+				error: err => {
+					console.log(err)
+					$('#login-form button[type="button"]').removeAttr('disabled').html('Login');
+
+				},
+				success: function (resp) {
+					if (resp == 1) {
+						location.href = 'index.php?page=home';
+					} else {
+						// $('#login-form').prepend('<div class="alert alert-danger">Username or password is incorrect.</div>')
+						// use toastr to show error message
+						toastr.error('Username or password is incorrect.');
+						$('#login-form button[type="button"]').removeAttr('disabled').html('Login');
+					}
+				}
+			})
+		})
+		$('.number').on('input', function () {
+			var val = $(this).val()
+			val = val.replace(/[^0-9 \,]/, '');
+			$(this).val(val)
+		})
 		$(document).ready(function () {
 			$('#pills-tab button').on('click', function () {
 				var target = $(this).data('bs-target');
@@ -179,8 +217,16 @@
 			});
 			$('#save_button').on('click', function () {
 				// check if first_name and mobile_number is not empty then show tostr message and return
-				if ($('#first_name').val() === '' || $('#mobile_number').val() === '') {
-					toastr.error('First Name and Mobile Number are required!');
+				if ($('#first_name').val() === '') {
+					toastr.error('First name is required!');
+					return;
+				}
+				if ($('#mobile_number').val() === '') {
+					toastr.error('Mobile number is required!');
+					return;
+				}
+				if ($('#signup_password').val() === '') {
+					toastr.error('Password is required!');
 					return;
 				}
 				$('input[name="action"]').val('save');
