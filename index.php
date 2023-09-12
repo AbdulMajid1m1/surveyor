@@ -2,7 +2,7 @@
 <html lang="en">
 <?php session_start() ?>
 <?php 
-	if(!isset($_SESSION['login_id']))
+	if(!isset($_SESSION['surveyor_id']))
 	    header('location:login.php');
 	include 'header.php' 
 ?>

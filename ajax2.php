@@ -33,7 +33,7 @@ if (isset($_POST['action'])) {
 				$otp = generateRandomOTP();
 				$update_query = "UPDATE users SET PIN_Code='$otp' WHERE Surveyor_ID='$surveyor_id'";
 				mysqli_query($conn, $update_query);
-				$response = ['status' => 'success', 'message' => 'OTP is generated and sent to your mobile number.', 'otp_active' => true, 'surveyor_id' => $surveyor_id];
+				$response = ['status' => 'success', 'message' => 'OTP is generated and sent to your mobile number.' . $otp, 'otp_active' => true, 'surveyor_id' => $surveyor_id];
 			} else {
 				$response = ['status' => 'error', 'message' => "Error: " . $query . "<br>" . mysqli_error($conn)];
 			}
@@ -52,6 +52,15 @@ if (isset($_POST['action'])) {
 		if (mysqli_num_rows($result) == 1) {
 			$update_query = "UPDATE users SET Status=1 WHERE Surveyor_ID='$surveyor_id'";
 			mysqli_query($conn, $update_query);
+
+			// save surveyor_id in session
+			$_SESSION['surveyor_id'] = $surveyor_id;
+			// save all user details in session
+			$row = mysqli_fetch_assoc($result);
+			foreach ($row as $key => $value) {
+				if ($key != 'password' && !is_numeric($key))
+					$_SESSION['login_' . $key] = $value;
+			}
 			$response = ['status' => 'verified', 'message' => 'OTP verified successfully. Redirecting...'];
 		} else {
 			$response = ['status' => 'error', 'message' => 'Wrong OTP!', 'otp_active' => true, 'surveyor_id' => $surveyor_id];

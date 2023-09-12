@@ -1,12 +1,12 @@
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
     <div class="dropdown">
    	<a href="javascript:void(0)" class="brand-link dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-        <span class="brand-image img-circle elevation-3 d-flex justify-content-center align-items-center bg-primary text-white font-weight-500" style="width: 38px;height:50px"><?php echo strtoupper(substr($_SESSION['login_firstname'], 0,1).substr($_SESSION['login_lastname'], 0,1)) ?></span>
-        <span class="brand-text font-weight-light"><?php echo ucwords($_SESSION['login_firstname'].' '.$_SESSION['login_lastname']) ?></span>
+        <span class="brand-image img-circle elevation-3 d-flex justify-content-center align-items-center bg-primary text-white font-weight-500" style="width: 38px;height:50px"><?php echo strtoupper(substr($_SESSION['login_First_Name'], 0,1).substr($_SESSION['login_Last_Name'], 0,1)) ?></span>
+        <span class="brand-text font-weight-light"><?php echo ucwords($_SESSION['login_First_Name'].' '.$_SESSION['login_Last_Name']) ?></span>
 
       </a>
       <div class="dropdown-menu" style="">
-        <a class="dropdown-item manage_account" href="javascript:void(0)" data-id="<?php echo $_SESSION['login_id'] ?>">Manage Account</a>
+        <a class="dropdown-item manage_account" href="javascript:void(0)" data-id="<?php echo $_SESSION['login_Surveyor_ID'] ?>">Manage Account</a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="ajax.php?action=logout">Logout</a>
       </div>
@@ -23,7 +23,7 @@
             </a>
             
           </li>    
-        <?php if($_SESSION['login_type'] == 1): ?>
+        <?php if(isset($_SESSION['surveyor_id'])): ?>
           <li class="nav-item">
             <a href="#" class="nav-link nav-edit_user">
               <i class="nav-icon fas fa-users"></i>

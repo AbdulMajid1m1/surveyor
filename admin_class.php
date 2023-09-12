@@ -17,7 +17,7 @@ Class Action {
 
 	function login(){
 		extract($_POST);
-			$qry = $this->db->query("SELECT *,concat(lastname,', ',firstname,' ',middlename) as name FROM users where email = '".$email."' and password = '".md5($password)."' ");
+			$qry = $this->db->query("SELECT *,concat(Last_Name,', ',Fist_Name,' ',Middle_Name) as name FROM users where email = '".$email."' and password = '".md5($password)."' ");
 		if($qry->num_rows > 0){
 			foreach ($qry->fetch_array() as $key => $value) {
 				if($key != 'password' && !is_numeric($key))
@@ -202,7 +202,7 @@ Class Action {
 			foreach($qid as $k => $v){
 				$data = " survey_id=$survey_id ";
 				$data .= ", question_id='$qid[$k]' ";
-				$data .= ", user_id='{$_SESSION['login_id']}' ";
+				$data .= ", user_id='{$_SESSION['surveyor_id']}' ";
 				if($type[$k] == 'check_opt'){
 					$data .= ", answer='[".implode("],[",$answer[$k])."]' ";
 				}else{
