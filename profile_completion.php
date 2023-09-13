@@ -131,11 +131,15 @@
             event.preventDefault();
             var formData = new FormData(document.getElementById('profile_form'));
             $.ajax({
-                url: 'submit.php',
+                // url: 'submit.php',
+                url: 'ajax.php?action=profile_completion',
                 type: 'POST',
                 data: formData,
                 success: function (response) {
                     toastr.success(response);
+                    setTimeout(function () {
+                        window.location.href = 'index.php?page=home';
+                    }, 1000);
                 },
                 error: function (response) {
                     toastr.error('Error saving data');

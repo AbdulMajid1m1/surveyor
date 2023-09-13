@@ -24,7 +24,7 @@
             
           </li>    
         <?php if(isset($_SESSION['surveyor_id'])): ?>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="#" class="nav-link nav-edit_user">
               <i class="nav-icon fas fa-users"></i>
               <p>
@@ -46,7 +46,7 @@
                 </a>
               </li>
             </ul>
-          </li>
+          </li> -->
           <li class="nav-item">
             <a href="#" class="nav-link nav-is-tree nav-edit_survey nav-view_survey">
               <i class="nav-icon fa fa-poll-h"></i>

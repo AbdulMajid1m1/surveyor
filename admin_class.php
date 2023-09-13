@@ -29,7 +29,7 @@ class Action
 		$qry = $this->db->query("SELECT * FROM users where Mobile_Number = '" . $login_mobile_number . "' and password = '" . md5($login_password) . "' ");
 		if ($qry->num_rows > 0) {
 			foreach ($qry->fetch_array() as $key => $value) {
-				if ($key != 'password' && !is_numeric($key))
+				if ($key != 'Password' && !is_numeric($key))
 					$_SESSION['login_' . $key] = $value;
 			}
 			return 1;
@@ -46,56 +46,65 @@ class Action
 		header("location:login.php");
 	}
 
-	function profileCompletion($crud)
+
+	function profileCompletion($conn, $filesArray, $postArray)
 	{
-		session_start();
-		extract($_POST);
+		// $profile_completion = $crud->profileCompletion();
+		$surveyor_id = $_SESSION['login_Surveyor_ID'];
 
-		$surveyorId = $_SESSION['login_Surveyor_ID'];
-		$target_dir = "Images/Profile_images/";
-
-		$Link_to_Photo = '';
-		if ($_FILES["photo"]["error"] == UPLOAD_ERR_OK) {
-			$temp_name = $_FILES["photo"]["tmp_name"];
-			$name = basename($_FILES["photo"]["name"]);
-			$extension = pathinfo($name, PATHINFO_EXTENSION);
-			$new_name = $surveyorId . "." . $extension;
-			$target_file = $target_dir . $new_name;
-
-			move_uploaded_file($temp_name, $target_file);
-			$Link_to_Photo = $target_file;
+		if (empty($surveyor_id)) {
+			echo "Surveyor ID is not set in the session";
+			exit;
 		}
 
-		$fields = ['Aadhar_Card_Number', 'PAN_Card_Number', 'Driving_License_Number', 'Status', 'Email_ID', 'Village', 'Tehsil', 'City', 'District', 'State', 'Country', 'Password', 'PIN_Code', 'Count_of_Surveys'];
-		$values = [];
+		$target_dir = "./Images/Profile_images/";
+		$file_extension = pathinfo($filesArray["photo"]["name"], PATHINFO_EXTENSION);
+		$target_file = $target_dir . $surveyor_id . '.' . $file_extension;
 
-		foreach ($fields as $field) {
-			if (isset($_POST[$field])) {
-				$values[$field] = "'" . $crud->db->real_escape_string($_POST[$field]) . "'";
+		if (move_uploaded_file($filesArray["photo"]["tmp_name"], $target_file)) {
+
+			// Get all other form fields
+			$aadhar_card_number = $postArray['aadhar_card_number'];
+			$pan_card_number = $postArray['pan_card_number'];
+			$driving_license_number = $postArray['driving_license_number'];
+			$email_id = $postArray['email_id'];
+			$village = $postArray['village'];
+			$tehsil = $postArray['tehsil'];
+			$city = $postArray['city'];
+			$district = $postArray['district'];
+			$state = $postArray['state'];
+			$country = $postArray['country'];
+			$pin_code = $postArray['pin_code'];
+
+			// Prepare and bind
+			$stmt = $conn->prepare("UPDATE users SET Aadhar_Card_Number = ?, PAN_Card_Number = ?, Driving_License_Number = ?, Email_ID = ?, Village = ?, Tehsil = ?, City = ?, District = ?, State = ?, Country = ?, PIN_Code = ?, Link_to_Photo = ? WHERE Surveyor_ID = ?");
+			$stmt->bind_param("sssssssssssss", $aadhar_card_number, $pan_card_number, $driving_license_number, $email_id, $village, $tehsil, $city, $district, $state, $country, $pin_code, $target_file, $surveyor_id);
+
+			// Execute the statement
+			if ($stmt->execute()) {
+				// Update the session data with the newly saved values
+				$_SESSION['login_Aadhar_Card_Number'] = $aadhar_card_number;
+				$_SESSION['login_PAN_Card_Number'] = $pan_card_number;
+				$_SESSION['login_Driving_License_Number'] = $driving_license_number;
+				$_SESSION['login_Email_ID'] = $email_id;
+				$_SESSION['login_Village'] = $village;
+				$_SESSION['login_Tehsil'] = $tehsil;
+				$_SESSION['login_City'] = $city;
+				$_SESSION['login_District'] = $district;
+				$_SESSION['login_State'] = $state;
+				$_SESSION['login_Country'] = $country;
+				$_SESSION['login_PIN_Code'] = $pin_code;
+				$_SESSION['login_Link_to_Photo'] = $target_file;
+
+				echo "Data updated successfully";
+			} else {
+				echo "Error updating data: " . $stmt->error;
 			}
-		}
-
-		if (isset($_POST['Password'])) {
-			$values['Password'] = "'" . md5($_POST['Password']) . "'";
-		}
-
-		if ($Link_to_Photo) {
-			$values['Link_to_Photo'] = "'$Link_to_Photo'";
-		}
-
-		$columns = implode(', ', array_keys($values));
-		$valueStr = implode(', ', array_values($values));
-
-		$qry = $crud->db->query("INSERT INTO users ($columns) VALUES ($valueStr)");
-		echo $crud->db->error;
-		if ($qry) {
-			echo 1;
-			exit;
 		} else {
-			echo "Error: " . $crud->db->error;
-			exit;
+			echo "Error uploading file";
 		}
 	}
+
 
 
 
