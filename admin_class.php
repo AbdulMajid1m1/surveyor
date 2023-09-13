@@ -104,6 +104,84 @@ class Action
 	}
 
 
+	function saveSurvey($conn, $filesArray, $postArray)
+	{
+		$target_dir = "Images/Survay_images/";
+
+		// Get the latest survey number from the rx_survey_data table
+		$result = mysqli_query($conn, "SELECT COUNT(*) AS count FROM rx_survey_data");
+		$row = mysqli_fetch_assoc($result);
+		$count = $row['count'] + 1;
+		$survey_no = "SUR" . str_pad($count, 4, '0', STR_PAD_LEFT);
+
+		$file_extension1 = pathinfo($filesArray["chemist_photo"]["name"], PATHINFO_EXTENSION);
+		$file_extension2 = pathinfo($filesArray["shop_photo"]["name"], PATHINFO_EXTENSION);
+		$target_file_chemist = $target_dir . $survey_no . "_chemist_photo." . $file_extension1;
+		$target_file_shop = $target_dir . $survey_no . "_shop_photo." . $file_extension2;
+
+		if (
+			move_uploaded_file($filesArray["chemist_photo"]["tmp_name"], $target_file_chemist) &&
+			move_uploaded_file($filesArray["shop_photo"]["tmp_name"], $target_file_shop)
+		) {
+
+			// Get other form data
+			$chemist_photo_path = $target_file_chemist;
+			$shop_photo_path = $target_file_shop;
+			$surveyor_id = $_SESSION['login_Surveyor_ID'];
+			$first_name = $postArray['first_name'];
+			$middle_name = $postArray['middle_name'];
+			$last_name = $postArray['last_name'];
+			$education = $postArray['education'];
+			$firm_name = $postArray['firm_name'];
+			$address = $postArray['address'];
+			$gps_coordinates = $postArray['gps_coordinates'];
+			$contact_number_1 = $postArray['contact_number_1'];
+			$contact_number_2 = $postArray['contact_number_2'];
+			$email_id = $postArray['email_id'];
+			$license_status = $postArray['license_status'];
+			$lic_holder_name = $postArray['lic_holder_name'];
+			$relation = $postArray['relation'];
+			$validity = $postArray['validity'];
+			$shop_open_time = $postArray['shop_open_time'];
+			$shop_close_time = $postArray['shop_close_time'];
+			$business_age = $postArray['business_age'];
+			$total_investment = $postArray['total_investment'];
+			$total_investment_inventory = $postArray['total_investment_inventory'];
+			$avg_sale_per_day = $postArray['avg_sale_per_day'];
+			$avg_expenses_per_day = $postArray['avg_expenses_per_day'];
+			$inventory_rotation = $postArray['inventory_rotation'];
+			$avg_shelf_life = $postArray['avg_shelf_life'];
+			$max_stock_wait_days = $postArray['max_stock_wait_days'];
+			$unsellable_stock_count = $postArray['unsellable_stock_count'];
+			$unsellable_stock_cost = $postArray['unsellable_stock_cost'];
+			$computer_at_shop = $postArray['computer_at_shop'];
+			$internet_available = $postArray['internet_available'];
+			$inventory_management_software = $postArray['inventory_management_software'];
+			$shop_area = $postArray['shop_area'];
+			$sale_dependency = $postArray['sale_dependency'];
+			$hospitals_5km = $postArray['hospitals_5km'];
+			$hospitals_list = $postArray['hospitals_list'];
+			$distributors_per_month = $postArray['distributors_per_month'];
+			$discount_range = $postArray['discount_range'];
+			$conditions_for_discount = $postArray['conditions_for_discount'];
+
+			$stmt = $conn->prepare("INSERT INTO rx_survey_data (surveyor_id, survey_no, shop_photo,chemist_photo, first_name, middle_name, last_name, education, firm_name, address, gps_coordinates, contact_number_1, contact_number_2, email_id, license_status, lic_holder_name, relation, validity, shop_open_time, shop_close_time, business_age, total_investment, total_investment_inventory, avg_sale_per_day, avg_expenses_per_day, inventory_rotation, avg_shelf_life, max_stock_wait_days, unsellable_stock_count, unsellable_stock_cost, computer_at_shop, internet_available, inventory_management_software, shop_area, sale_dependency, hospitals_5km, hospitals_list, distributors_per_month, discount_range, conditions_for_discount) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+
+			if ($stmt === false) {
+				echo json_encode(["status" => "error", "message" => "Statement preparation failed: " . $conn->error]);
+			}
+
+			$stmt->bind_param("ssssssssssssssssssssssssssssssssssssssss", $surveyor_id, $survey_no, $shop_photo_path, $chemist_photo_path, $first_name, $middle_name, $last_name, $education, $firm_name, $address, $gps_coordinates, $contact_number_1, $contact_number_2, $email_id, $license_status, $lic_holder_name, $relation, $validity, $shop_open_time, $shop_close_time, $business_age, $total_investment, $total_investment_inventory, $avg_sale_per_day, $avg_expenses_per_day, $inventory_rotation, $avg_shelf_life, $max_stock_wait_days, $unsellable_stock_count, $unsellable_stock_cost, $computer_at_shop, $internet_available, $inventory_management_software, $shop_area, $sale_dependency, $hospitals_5km, $hospitals_list, $distributors_per_month, $discount_range, $conditions_for_discount);
+			if ($stmt->execute()) {
+				echo json_encode(["status" => "success", "message" => "Data inserted successfully"]);
+			} else {
+				echo json_encode(["status" => "error", "message" => "Error executing statement: " . $stmt->error]);
+			}
+		} else {
+			echo json_encode(["status" => "error", "message" => "Error uploading files: Check files 'chemist_photo' and 'shop_photo'"]);
+		}
+	}
+
 
 
 
@@ -197,28 +275,7 @@ class Action
 		}
 	}
 
-	function save_survey()
-	{
-		extract($_POST);
-		$data = "";
-		foreach ($_POST as $k => $v) {
-			if (!in_array($k, array('id')) && !is_numeric($k)) {
-				if (empty($data)) {
-					$data .= " $k='$v' ";
-				} else {
-					$data .= ", $k='$v' ";
-				}
-			}
-		}
-		if (empty($id)) {
-			$save = $this->db->query("INSERT INTO survey_set set $data");
-		} else {
-			$save = $this->db->query("UPDATE survey_set set $data where id = $id");
-		}
 
-		if ($save)
-			return 1;
-	}
 	function delete_survey()
 	{
 		extract($_POST);

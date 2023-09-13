@@ -38,7 +38,6 @@ include 'header.php'
           <hr class="border-primary">
         </div><!-- /.container-fluid -->
 
-        <?php print_r($_SESSION) ?>
       </div>
       <!-- /.content-header -->
 

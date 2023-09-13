@@ -29,7 +29,7 @@ if (isset($_POST['action'])) {
 
 		$result = mysqli_query($conn, "SELECT * FROM users WHERE Mobile_Number='$mobile_number'");
 		if (mysqli_num_rows($result) == 0) {
-			$query = "INSERT INTO users (Surveyor_ID, First_Name, Middle_Name, Last_Name, Mobile_Number, Password, Status) VALUES ('$surveyor_id', '$first_name', '$middle_name', '$last_name', '$mobile_number', '".md5($password)."', 0)";
+			$query = "INSERT INTO users (Surveyor_ID, First_Name, Middle_Name, Last_Name, Mobile_Number, Password, Status) VALUES ('$surveyor_id', '$first_name', '$middle_name', '$last_name', '$mobile_number', '" . md5($password) . "', 0)";
 			if (mysqli_query($conn, $query)) {
 				$otp = generateRandomOTP();
 				$update_query = "UPDATE users SET PIN_Code='$otp' WHERE Surveyor_ID='$surveyor_id'";

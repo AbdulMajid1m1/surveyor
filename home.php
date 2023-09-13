@@ -63,3 +63,6 @@
   </div>
 
 <?php endif; ?>
+
+<!--  include survey_list page -->
+<?php include('survey_list.php') ?>

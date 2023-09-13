@@ -79,14 +79,14 @@
             </ul>
 
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a href="./index.php?page=survey_report" class="nav-link nav-survey_report">
               <i class="nav-icon fas fa-poll"></i>
               <p>
                 Survey Report
               </p>
             </a>
-          </li>
+          </li> -->
         <?php else: ?>
           <li class="nav-item">
             <a href="./index.php?page=survey_widget" class="nav-link nav-survey_widget nav-answer_survey">

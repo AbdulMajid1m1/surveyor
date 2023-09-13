@@ -19,7 +19,9 @@ if ($action == 'logout') {
 if ($action == 'profile_completion') {
 	$profile_completion = $crud->profileCompletion($conn, $_FILES, $_POST);
 }
-
+if ($action == 'save_survey') {
+	$survey_result = $crud->saveSurvey($conn, $_FILES, $_POST);
+}
 
 
 if ($action == 'save_user') {
@@ -37,11 +39,7 @@ if ($action == 'delete_user') {
 	if ($save)
 		echo $save;
 }
-if ($action == "save_survey") {
-	$save = $crud->save_survey();
-	if ($save)
-		echo $save;
-}
+
 if ($action == "delete_survey") {
 	$delete = $crud->delete_survey();
 	if ($delete)

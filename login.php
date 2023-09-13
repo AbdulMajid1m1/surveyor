@@ -186,6 +186,7 @@
 						// $('#login-form').prepend('<div class="alert alert-danger">Username or password is incorrect.</div>')
 						// use toastr to show error message
 						toastr.error('Username or password is incorrect.');
+
 						$('#login-form button[type="button"]').removeAttr('disabled').html('Login');
 					}
 				}
@@ -245,6 +246,8 @@
 							}
 						} else if (response.status === 'success') {
 							toastr.success(response.message);
+							// hide the save button
+							$('#save_button').hide();
 							$('#otp_section').show();
 							$('#surveyor_id').val(response.surveyor_id);
 						} else if (response.status === 'verified') {
