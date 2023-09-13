@@ -21,18 +21,23 @@
       </a>
     </li>
     <li class="nav-item">
-      <div class="d-flex align-items-center avatar-div" style="background-color: white;border-radius: 50%;">
-        <?php
-        // Check if user profile image exists in the session
-        if (isset($_SESSION['login_Link_to_Photo'])) {
-          $profileImage = $_SESSION['login_Link_to_Photo'];
-          echo '<img src="' . $profileImage . '" alt="User Avatar" class="rounded-circle img-responsive nav-avatar" style="width: 40px;height: 40px;vertical-align: middle;">';
-        } else {
-          // Display a Font Awesome icon as a fallback with CSS styles
-          echo '<i class="fas fa-user-circle fa-2x text-white" style="vertical-align: middle;"></i>';
-        }
-        ?>
-      </div>
+      <a href="profile_completion.php?action=profile_information" style="text-decoration: none; color: inherit;">
+        <div class="d-flex align-items-center avatar-div" style="background-color: white; border-radius: 50%;">
+          <?php
+          // Check if user profile image exists in the session
+          if (isset($_SESSION['login_Link_to_Photo'])) {
+            $profileImage = $_SESSION['login_Link_to_Photo'];
+            echo '<img src="' . $profileImage . '" alt="User Avatar" class="rounded-circle img-responsive nav-avatar" style="width: 40px; height: 40px; vertical-align: middle;">';
+          } else {
+            // Display a Font Awesome icon as a fallback with CSS styles
+            echo '<i class="fas fa-user-circle fa-2x text-white" style="vertical-align: middle;"></i>';
+          }
+          ?>
+        </div>
+      </a>
+    </li>
+
+    </div>
     </li>
   </ul>
 </nav>
@@ -54,8 +59,9 @@
       width: 35px !important;
       height: 35px !important;
     }
+
     .avatar-div {
-    margin-top: 2px;
+      margin-top: 2px;
     }
   }
 </style>

@@ -1,29 +1,37 @@
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <div class="dropdown">
-   	<a href="javascript:void(0)" class="brand-link dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
-        <span class="brand-image img-circle elevation-3 d-flex justify-content-center align-items-center bg-primary text-white font-weight-500" style="width: 38px;height:50px"><?php echo strtoupper(substr($_SESSION['login_First_Name'], 0,1).substr($_SESSION['login_Last_Name'], 0,1)) ?></span>
-        <span class="brand-text font-weight-light"><?php echo ucwords($_SESSION['login_First_Name'].' '.$_SESSION['login_Last_Name']) ?></span>
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <div class="dropdown">
+    <a href="javascript:void(0)" class="brand-link dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+      <span
+        class="brand-image img-circle elevation-3 d-flex justify-content-center align-items-center bg-primary text-white font-weight-500"
+        style="width: 38px;height:50px">
+        <?php echo strtoupper(substr($_SESSION['login_First_Name'], 0, 1) . substr($_SESSION['login_Last_Name'], 0, 1)) ?>
+      </span>
+      <span class="brand-text font-weight-light">
+        <?php echo ucwords($_SESSION['login_First_Name'] . ' ' . $_SESSION['login_Last_Name']) ?>
+      </span>
 
-      </a>
-      <div class="dropdown-menu" style="">
-        <a class="dropdown-item manage_account" href="javascript:void(0)" data-id="<?php echo $_SESSION['login_Surveyor_ID'] ?>">Manage Account</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="ajax.php?action=logout">Logout</a>
-      </div>
+    </a>
+    <div class="dropdown-menu" style="">
+      <a class="dropdown-item manage_account" href="javascript:void(0)"
+        data-id="<?php echo $_SESSION['login_Surveyor_ID'] ?>">Manage Account</a>
+      <div class="dropdown-divider"></div>
+      <a class="dropdown-item" href="ajax.php?action=logout">Logout</a>
     </div>
-    <div class="sidebar">
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column nav-flat" data-widget="treeview" role="menu" data-accordion="false">
-          <li class="nav-item dropdown">
-            <a href="./" class="nav-link nav-home">
-              <i class="nav-icon fas fa-tachometer-alt"></i>
-              <p>
-                Dashboard
-              </p>
-            </a>
-            
-          </li>    
-        <?php if(isset($_SESSION['surveyor_id'])): ?>
+  </div>
+  <div class="sidebar">
+    <nav class="mt-2">
+      <ul class="nav nav-pills nav-sidebar flex-column nav-flat" data-widget="treeview" role="menu"
+        data-accordion="false">
+        <li class="nav-item dropdown">
+          <a href="./" class="nav-link nav-home">
+            <i class="nav-icon fas fa-tachometer-alt"></i>
+            <p>
+              Dashboard
+            </p>
+          </a>
+
+        </li>
+        <?php if (isset($_SESSION['surveyor_id'])): ?>
           <!-- <li class="nav-item">
             <a href="#" class="nav-link nav-edit_user">
               <i class="nav-icon fas fa-users"></i>
@@ -58,17 +66,18 @@
             <ul class="nav nav-treeview">
               <li class="nav-item">
                 <a href="./index.php?page=new_survey" class="nav-link nav-new_survey tree-item">
-                  <i class="fas fa-angle-right nav-icon"></i>
-                  <p>Add New</p>
+                  <i class="fas fa-pen nav-icon"></i> <!-- Changed to a pen icon -->
+                  <p>New Survey</p>
                 </a>
               </li>
               <li class="nav-item">
                 <a href="./index.php?page=survey_list" class="nav-link nav-survey_list tree-item">
-                  <i class="fas fa-angle-right nav-icon"></i>
-                  <p>List</p>
+                  <i class="fas fa-list-ul nav-icon"></i> <!-- Changed to a list icon -->
+                  <p>Surveys List</p>
                 </a>
               </li>
             </ul>
+
           </li>
           <li class="nav-item">
             <a href="./index.php?page=survey_report" class="nav-link nav-survey_report">
@@ -77,7 +86,7 @@
                 Survey Report
               </p>
             </a>
-          </li>     
+          </li>
         <?php else: ?>
           <li class="nav-item">
             <a href="./index.php?page=survey_widget" class="nav-link nav-survey_widget nav-answer_survey">
@@ -86,29 +95,29 @@
                 Survey List
               </p>
             </a>
-          </li>  
+          </li>
         <?php endif; ?>
-        </ul>
-      </nav>
-    </div>
-  </aside>
-  <script>
-  	$(document).ready(function(){
-  		var page = '<?php echo isset($_GET['page']) ? $_GET['page'] : 'home' ?>';
-  		if($('.nav-link.nav-'+page).length > 0){
-  			$('.nav-link.nav-'+page).addClass('active')
-          console.log($('.nav-link.nav-'+page).hasClass('tree-item'))
-  			if($('.nav-link.nav-'+page).hasClass('tree-item') == true){
-          $('.nav-link.nav-'+page).closest('.nav-treeview').siblings('a').addClass('active')
-  				$('.nav-link.nav-'+page).closest('.nav-treeview').parent().addClass('menu-open')
-  			}
-        if($('.nav-link.nav-'+page).hasClass('nav-is-tree') == true){
-          $('.nav-link.nav-'+page).parent().addClass('menu-open')
-        }
+      </ul>
+    </nav>
+  </div>
+</aside>
+<script>
+  $(document).ready(function () {
+    var page = '<?php echo isset($_GET['page']) ? $_GET['page'] : 'home' ?>';
+    if ($('.nav-link.nav-' + page).length > 0) {
+      $('.nav-link.nav-' + page).addClass('active')
+      console.log($('.nav-link.nav-' + page).hasClass('tree-item'))
+      if ($('.nav-link.nav-' + page).hasClass('tree-item') == true) {
+        $('.nav-link.nav-' + page).closest('.nav-treeview').siblings('a').addClass('active')
+        $('.nav-link.nav-' + page).closest('.nav-treeview').parent().addClass('menu-open')
+      }
+      if ($('.nav-link.nav-' + page).hasClass('nav-is-tree') == true) {
+        $('.nav-link.nav-' + page).parent().addClass('menu-open')
+      }
 
-  		}
-      $('.manage_account').click(function(){
-        uni_modal('Manage Account','manage_user.php?id='+$(this).attr('data-id'))
-      })
-  	})
-  </script>
+    }
+    $('.manage_account').click(function () {
+      uni_modal('Manage Account', 'manage_user.php?id=' + $(this).attr('data-id'))
+    })
+  })
+</script>
