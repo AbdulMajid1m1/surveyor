@@ -59,7 +59,7 @@ if (isset($_POST['action'])) {
 			// save all user details in session
 			$row = mysqli_fetch_assoc($result);
 			foreach ($row as $key => $value) {
-				if ($key != 'password' && !is_numeric($key))
+				if ($key != 'Password' && !is_numeric($key))
 					$_SESSION['login_' . $key] = $value;
 			}
 			$response = ['status' => 'verified', 'message' => 'OTP verified successfully. Redirecting...'];

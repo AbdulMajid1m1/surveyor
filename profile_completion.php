@@ -52,7 +52,7 @@
                                     <!-- pattern="\d{12}" -->
                                 </label>
                                 <input type="text" name="aadhar_card_number" class="form-control"
-                                    title="Please enter a valid Aadhar card number" required >
+                                    title="Please enter a valid Aadhar card number" required>
                             </div>
 
                             <div class="form-group">
@@ -61,58 +61,56 @@
                                 </label>
                                 <!-- pattern="[A-Z]{5}\d{4}[A-Z]{1}"  -->
                                 <input type="text" name="pan_card_number" class="form-control"
-                                    title="Please enter a valid PAN card number" required >
+                                    title="Please enter a valid PAN card number" required>
                             </div>
 
                             <div class="form-group">
                                 <label>Driving License Number*</label>
-                                <input type="text" name="driving_license_number" class="form-control" required
-                                    >
+                                <input type="text" name="driving_license_number" class="form-control" required>
                             </div>
 
                             <div class="form-group">
                                 <label>Email ID*</label>
-                                <input type="email" name="email_id" class="form-control" required
-                                    >
+                                <input type="email" name="email_id" class="form-control" required>
                             </div>
 
                             <div class="form-group">
                                 <label>Village*</label>
-                                <input type="text" name="village" class="form-control" required >
+                                <input type="text" name="village" class="form-control" required>
                             </div>
 
                             <div class="form-group">
                                 <label>Tehsil*</label>
-                                <input type="text" name="tehsil" class="form-control" required >
+                                <input type="text" name="tehsil" class="form-control" required>
                             </div>
 
                             <div class="form-group">
                                 <label>City*</label>
-                                <input type="text" name="city" class="form-control" required >
+                                <input type="text" name="city" class="form-control" required>
                             </div>
 
                             <div class="form-group">
                                 <label>District*</label>
-                                <input type="text" name="district" class="form-control" required >
+                                <input type="text" name="district" class="form-control" required>
                             </div>
 
                             <div class="form-group">
                                 <label>State*</label>
-                                <input type="text" name="state" class="form-control" required >
+                                <input type="text" name="state" class="form-control" required>
                             </div>
 
                             <div class="form-group">
                                 <label>Country*</label>
-                                <input type="text" name="country" class="form-control" required >
+                                <input type="text" name="country" class="form-control" required>
                             </div>
 
-                            <div class="form-group">
+                            <!-- <div class="form-group">
                                 <label>PIN Code
 
                                 </label>
                                 <input type="text" name="pin_code" class="form-control" pattern="\d{6}" 
                                     title="Please enter a valid PIN code" required>
-                            </div>
+                            </div> -->
 
                             <button type="submit" class="btn btn-primary">Submit</button>
                         </form>
@@ -136,10 +134,17 @@
                 type: 'POST',
                 data: formData,
                 success: function (response) {
-                    toastr.success(response);
-                    setTimeout(function () {
-                        window.location.href = 'index.php?page=home';
-                    }, 1000);
+                    response = JSON.parse(response);
+                    console.log(response);
+
+                    if (response.status === "success") {
+                        toastr.success(response.message);
+                        setTimeout(function () {
+                            window.location.href = 'index.php?page=home';
+                        }, 1000);
+                    } else {
+                        toastr.error(response.message);
+                    }
                 },
                 error: function (response) {
                     toastr.error('Error saving data');

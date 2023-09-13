@@ -7,6 +7,7 @@
 	<meta content="width=device-width, initial-scale=1.0" name="viewport">
 	<title>Surveyor Signup Page</title>
 	<?php include('./header.php'); ?>
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 	<style>
 		body {
 			background-color: #f8f9fa;
@@ -15,17 +16,17 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			transition: all 0.3s;
 		}
 
 		.main-container {
-			max-width: 400px;
+			max-width: 800px;
 			width: 100%;
 			background: #fff;
 			border-radius: 10px;
 			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 			overflow: hidden;
 			padding: 20px;
+			transition: all 0.3s;
 		}
 
 		.card-header {
@@ -36,80 +37,57 @@
 			margin-bottom: 20px;
 		}
 
-		.form-group {
-			margin-bottom: 15px;
+		.nav-pills .nav-link {
+			border-radius: 5px;
+			transition: all 0.3s ease-in-out;
+			border: 1px solid #007bff;
+			color: #007bff;
+			padding: 2px 10px;
+
+			/* decrease font size 	 */
+			font-size: 1.5rem;
 		}
 
-		.form-group label {
-			color: #343a40;
-		}
-
-		.btn {
+		.nav-pills .nav-link.active {
 			background-color: #007bff;
-			color: #fff;
-			border: none;
+			/* This is similar to btn-primary */
+			color: white;
+			/* This is similar to btn-primary */
+			box-shadow: 0 4px 6px -1px rgba(0, 106, 194, 0.25), 0 2px 4px -1px rgba(0, 106, 194, 0.3);
 		}
 
-		.btn:hover {
-			background-color: #0056b3;
+
+		.nav-pills .nav-link:not(.active):hover {
+			background-color: #f8f9fa;
 		}
 
-		.back-to-top {
-			position: fixed;
-			bottom: 20px;
-			right: 20px;
-			color: #343a40;
-		}
-
-		.section {
-			display: none;
-		}
-
-		.section.active {
-			display: block;
-		}
-
-		.login-section input,
-		.signup-section input {
-			width: 100%;
-			padding: 8px;
-			margin: 10px 0;
-			box-sizing: border-box;
-		}
-
-		.nav-item .nav-link {
-			padding: 10px 16px;
-			/* Adjust as needed */
-			font-size: 14px;
-			/* Adjust as needed */
-			text-align: center;
+		@media (max-width: 350px) {
+			.nav-pills .nav-link {
+				font-size: 1rem;
+			}
 		}
 	</style>
 </head>
 
 <body>
+
 	<div class="main-container">
-		<div class="card-header" style="text-align: center;">
+		<div class="card-header">
 			Come and Join Our Survey Team
 			<div style="margin-bottom: 20px;"></div>
 			<ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
 				<li class="nav-item" role="presentation" style="margin-right: 10px;">
 					<button class="nav-link active" id="pills-signup-tab" data-bs-toggle="pill"
 						data-bs-target="#pills-signup" type="button" role="tab" aria-controls="pills-signup"
-						aria-selected="true"
-						style="background-color: #007bff; border-radius: 5px; border: none; transition: all 0.3s;">
-						Signup
-					</button>
+						aria-selected="true">Signup</button>
 				</li>
 				<li class="nav-item" role="presentation">
 					<button class="nav-link" id="pills-login-tab" data-bs-toggle="pill" data-bs-target="#pills-login"
-						type="button" role="tab" aria-controls="pills-login" aria-selected="false"
-						style="background-color: transparent; border-radius: 5px; border: none; transition: all 0.3s;">
-						Login
-					</button>
+						type="button" role="tab" aria-controls="pills-login" aria-selected="false">Login</button>
 				</li>
 			</ul>
 		</div>
+
 		<div class="tab-content" id="pills-tabContent">
 			<div class="tab-pane fade show active section signup-section" id="pills-signup" role="tabpanel"
 				aria-labelledby="pills-signup-tab">
@@ -129,7 +107,8 @@
 
 					<div class="form-group">
 						<label for="mobile_number">Mobile Number</label>
-						<input type="text" id="mobile_number" name="mobile_number" class="form-control" required>
+						<input type="text" id="mobile_number" name="mobile_number" class="form-control" required
+							pattern="[0-9]{10}" onkeypress="return isNumberKey(event)" oninput="validateInput(this)">
 					</div>
 					<div class="form-group">
 						<label for="signup_password">Password</label>
@@ -177,7 +156,15 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 	<script>
-
+		function isNumberKey(evt) {
+			var charCode = (evt.which) ? evt.which : event.keyCode
+			if (charCode > 31 && (charCode < 48 || charCode > 57))
+				return false;
+			return true;
+		}
+		function validateInput(input) {
+			input.value = input.value.replace(/[^0-9]/g, '');
+		}
 		$('#login_form').submit(function (e) {
 			e.preventDefault()
 			$('#login-form button[type="button"]').attr('disabled', true).html('Logging in...');
@@ -214,6 +201,11 @@
 				var target = $(this).data('bs-target');
 				$('.section').removeClass('active');
 				$(target).addClass('active show');
+
+				// Remove active class from all nav-links
+				$('.nav-link').removeClass('active');
+				// Add active class to the clicked nav-link
+				$(this).addClass('active');
 			});
 			$('#save_button').on('click', function () {
 				// check if first_name and mobile_number is not empty then show tostr message and return
@@ -263,8 +255,27 @@
 						}
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
-						toastr.error('An error occurred: ' + textStatus + ' - ' + errorThrown);
+						console.log(textStatus, errorThrown);
+
+						if (textStatus === 'parsererror') {
+							try {
+								var responseText = jqXHR.responseText;
+								if (responseText && responseText.startsWith('<')) {
+									// This means the response is probably an HTML error page
+									toastr.error('An error occurred: Invalid Response from Server');
+									console.error('An error occurred: the response is not valid JSON: ', responseText);
+								} else {
+									toastr.error('An error occurred: ' + textStatus + ' - ' + errorThrown);
+								}
+							} catch (e) {
+								toastr.error('An error occurred: Unknown Error');
+								console.error('An unexpected error occurred:', e);
+							}
+						} else {
+							toastr.error('An error occurred: ' + textStatus + ' - ' + errorThrown);
+						}
 					}
+
 				});
 			}
 

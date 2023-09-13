@@ -74,11 +74,10 @@ class Action
 			$district = $postArray['district'];
 			$state = $postArray['state'];
 			$country = $postArray['country'];
-			$pin_code = $postArray['pin_code'];
 
 			// Prepare and bind
-			$stmt = $conn->prepare("UPDATE users SET Aadhar_Card_Number = ?, PAN_Card_Number = ?, Driving_License_Number = ?, Email_ID = ?, Village = ?, Tehsil = ?, City = ?, District = ?, State = ?, Country = ?, PIN_Code = ?, Link_to_Photo = ? WHERE Surveyor_ID = ?");
-			$stmt->bind_param("sssssssssssss", $aadhar_card_number, $pan_card_number, $driving_license_number, $email_id, $village, $tehsil, $city, $district, $state, $country, $pin_code, $target_file, $surveyor_id);
+			$stmt = $conn->prepare("UPDATE users SET Aadhar_Card_Number = ?, PAN_Card_Number = ?, Driving_License_Number = ?, Email_ID = ?, Village = ?, Tehsil = ?, City = ?, District = ?, State = ?, Country = ?, Link_to_Photo = ? WHERE Surveyor_ID = ?");
+			$stmt->bind_param("ssssssssssss", $aadhar_card_number, $pan_card_number, $driving_license_number, $email_id, $village, $tehsil, $city, $district, $state, $country, $target_file, $surveyor_id);
 
 			// Execute the statement
 			if ($stmt->execute()) {
@@ -93,17 +92,17 @@ class Action
 				$_SESSION['login_District'] = $district;
 				$_SESSION['login_State'] = $state;
 				$_SESSION['login_Country'] = $country;
-				$_SESSION['login_PIN_Code'] = $pin_code;
 				$_SESSION['login_Link_to_Photo'] = $target_file;
 
-				echo "Data updated successfully";
+				echo json_encode(["status" => "success", "message" => "Data updated successfully"]);
 			} else {
-				echo "Error updating data: " . $stmt->error;
+				echo json_encode(["status" => "error", "message" => "Error updating data: " . $stmt->error]);
 			}
 		} else {
-			echo "Error uploading file";
+			echo json_encode(["status" => "error", "message" => "Error uploading File "]);
 		}
 	}
+
 
 
 
