@@ -550,7 +550,7 @@ class Action
 	function delete_survey()
 	{
 		extract($_POST);
-		$delete = $this->db->query("DELETE FROM survey_set where id = " . $id);
+		$delete = $this->db->query("DELETE FROM rx_survey_data where sruvey_id = " . $id);
 		if ($delete) {
 			return 1;
 		}
