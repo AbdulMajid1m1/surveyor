@@ -1,10 +1,9 @@
 <?php
 include 'db_connect.php';
-$qry = $conn->query("SELECT * FROM survey_set where id = ".$_GET['id'])->fetch_array();
-foreach($qry as $k => $v){
-	if($k == 'title')
-		$k = 'stitle';
-	$$k = $v;
+$mode = 'edit';
+if (isset($_GET['id'])) {
+	$id = $_GET['id'];
 }
+
 include 'new_survey.php';
 ?>

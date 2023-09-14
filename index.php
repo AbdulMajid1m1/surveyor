@@ -3,7 +3,7 @@
 <?php session_start() ?>
 
 <?php
-if (!isset($_SESSION['surveyor_id']))
+if (!isset($_SESSION['login_Surveyor_ID']))
   header('location: login.php');
 elseif (empty($_SESSION['login_Aadhar_Card_Number'])) {
   header('location: profile_completion.php');

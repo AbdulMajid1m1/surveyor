@@ -2,18 +2,170 @@
 if (!isset($conn)) {
 	include 'db_connect.php';
 }
+
+// Check if the 'mode' parameter is set to 'edit' in the URL
+if (isset($mode) && $mode === 'edit') {
+	// Check if the 'id' parameter is also set
+	if (isset($_GET['id'])) {
+		$id = $_GET['id'];
+		// Fetch existing data from the database based on the $id
+		$qry = $conn->query("SELECT * FROM rx_survey_data WHERE survey_id = $id");
+		$row = $qry->fetch_assoc();
+
+		// Assign data to variables for prefilling the form
+		$survey_no = $row['survey_no'];
+		$first_name = $row['first_name'];
+		$middle_name = $row['middle_name'];
+		$last_name = $row['last_name'];
+		$education = $row['education'];
+		$firm_name = $row['firm_name'];
+		$address = $row['address'];
+		$gps_coordinates = $row['gps_coordinates'];
+		$contact_number_1 = $row['contact_number_1'];
+		$contact_number_2 = $row['contact_number_2'];
+		$email_id = $row['email_id'];
+		$license_status = $row['license_status'];
+		$lic_holder_name = $row['lic_holder_name'];
+		$relation = $row['relation'];
+		$validity = $row['validity'];
+		$business_age = $row['business_age'];
+		$total_investment = $row['total_investment'];
+		$total_investment_inventory = $row['total_investment_inventory'];
+		$avg_sale_per_day = $row['avg_sale_per_day'];
+		$avg_expenses_per_day = $row['avg_expenses_per_day'];
+		$inventory_rotation = $row['inventory_rotation'];
+		$avg_shelf_life = $row['avg_shelf_life'];
+		$max_stock_wait_days = $row['max_stock_wait_days'];
+		$unsellable_stock_count = $row['unsellable_stock_count'];
+		$unsellable_stock_cost = $row['unsellable_stock_cost'];
+		$computer_at_shop = $row['computer_at_shop'];
+		$internet_available = $row['internet_available'];
+		$inventory_management_software = $row['inventory_management_software'];
+		$shop_area = $row['shop_area'];
+		$sale_dependency = $row['sale_dependency'];
+		$hospitals_5km = $row['hospitals_5km'];
+		$hospitals_list = $row['hospitals_list'];
+		$distributors_per_month = $row['distributors_per_month'];
+		$discount_range = $row['discount_range'];
+		$conditions_for_discount = $row['conditions_for_discount'];
+		$shop_open_time = $row['shop_open_time'];
+		$shop_close_time = $row['shop_close_time'];
+		$chemistImage = $row['chemist_photo'];
+		$shopImage = $row['shop_photo'];
+		print_r($row['chemist_photo']);
+		print_r($shopImage);
+		$button_text = 'Update'; // Change the button text to "Update"
+		$form_action = 'update_survey'; // Change the form action to the update process
+	}
+} elseif (isset($mode) && $mode === 'view') {
+	// Check if the 'id' parameter is also set
+	if (isset($_GET['id'])) {
+		$id = $_GET['id'];
+		// Fetch existing data from the database based on the $id
+		$qry = $conn->query("SELECT * FROM rx_survey_data WHERE survey_id = $id");
+		$row = $qry->fetch_assoc();
+
+		// Assign data to variables for prefilling the form
+		$survey_no = $row['survey_no'];
+		$first_name = $row['first_name'];
+		$middle_name = $row['middle_name'];
+		$last_name = $row['last_name'];
+		$education = $row['education'];
+		$firm_name = $row['firm_name'];
+		$address = $row['address'];
+		$gps_coordinates = $row['gps_coordinates'];
+		$contact_number_1 = $row['contact_number_1'];
+		$contact_number_2 = $row['contact_number_2'];
+		$email_id = $row['email_id'];
+		$license_status = $row['license_status'];
+		$lic_holder_name = $row['lic_holder_name'];
+		$relation = $row['relation'];
+		$validity = $row['validity'];
+		$business_age = $row['business_age'];
+		$total_investment = $row['total_investment'];
+		$total_investment_inventory = $row['total_investment_inventory'];
+		$avg_sale_per_day = $row['avg_sale_per_day'];
+		$avg_expenses_per_day = $row['avg_expenses_per_day'];
+		$inventory_rotation = $row['inventory_rotation'];
+		$avg_shelf_life = $row['avg_shelf_life'];
+		$max_stock_wait_days = $row['max_stock_wait_days'];
+		$unsellable_stock_count = $row['unsellable_stock_count'];
+		$unsellable_stock_cost = $row['unsellable_stock_cost'];
+		$computer_at_shop = $row['computer_at_shop'];
+		$internet_available = $row['internet_available'];
+		$inventory_management_software = $row['inventory_management_software'];
+		$shop_area = $row['shop_area'];
+		$sale_dependency = $row['sale_dependency'];
+		$hospitals_5km = $row['hospitals_5km'];
+		$hospitals_list = $row['hospitals_list'];
+		$distributors_per_month = $row['distributors_per_month'];
+		$discount_range = $row['discount_range'];
+		$conditions_for_discount = $row['conditions_for_discount'];
+		$shop_open_time = $row['shop_open_time'];
+		$shop_close_time = $row['shop_close_time'];
+		$chemistImage = $row['chemist_photo'];
+		$shopImage = $row['shop_photo'];
+		// print $chemistImage; and print $shopImage; are not working
+		print_r($chemistImage);
+		print_r($shopImage);
+		// Disable input fields for viewing
+		$input_disabled = 'disabled';
+		$button_text = 'View'; // Button text for viewing data
+	}
+} else {
+	$id = '';
+	$first_name = 'Abdul';
+	$middle_name = 'view only';
+	$last_name = 'Majid';
+	$education = 'Education';
+	$firm_name = 'Firm';
+	$address = '123 Street, City';
+	$gps_coordinates = 'Latitude, Longitude';
+	$contact_number_1 = '123-456-7890';
+	$contact_number_2 = '987-654-3210';
+	$email_id = 'email@example.com';
+	$license_status = 'owned'; // Default to 'owned'
+	$lic_holder_name = 'License Holder';
+	$relation = 'Relation';
+	$validity = '2023-09-13'; // Default date value
+	$business_age = '5';
+	$total_investment = '50000';
+	$total_investment_inventory = '20000';
+	$avg_sale_per_day = '1000';
+	$avg_expenses_per_day = '500';
+	$inventory_rotation = '10';
+	$avg_shelf_life = '30';
+	$max_stock_wait_days = '7';
+	$unsellable_stock_count = '20';
+	$unsellable_stock_cost = '100';
+	$computer_at_shop = 'Yes'; // Default to 'Yes'
+	$internet_available = 'Yes'; // Default to 'Yes'
+	$inventory_management_software = 'Software';
+	$shop_area = '2000';
+	$sale_dependency = 'High'; // Default to 'High'
+	$hospitals_5km = '5';
+	$hospitals_list = 'Hospital 1, Hospital 2';
+	$distributors_per_month = '10';
+	$discount_range = '5-10%';
+	$conditions_for_discount = 'None';
+	$shop_open_time = '08:00';
+	$shop_close_time = '20:00';
+
+}
 ?>
+
 <div class="col-lg-12">
 	<div class="card">
 		<div class="card-body">
 			<form id="manage_survey" enctype="multipart/form-data">
-				<input type="hidden" name="id" value="<?php echo isset($id) ? $id : '' ?>">
+				<input type="hidden" name="survey_id" id="survey_id" value="<?php echo $id; ?>">
+				<input type="hidden" name="survey_no" id="survey_no" value="<?php echo $survey_no; ?>">
 				<div class="row">
 					<div class="col-md-6 border-right">
 						<div class="form-group">
 							<label for="first_name" class="control-label">First Name</label>
 							<input type="text" name="first_name" class="form-control form-control-sm" required
-								value="<?php echo isset($first_name) ? $first_name : 'Abdul Majdi' ?>">
+								value="<?php echo isset($first_name) ? $first_name : 'Abdul' ?>">
 						</div>
 						<div class="form-group">
 							<label for="middle_name" class="control-label">Middle Name</label>
@@ -23,7 +175,7 @@ if (!isset($conn)) {
 						<div class="form-group">
 							<label for="last_name" class="control-label">Last Name</label>
 							<input type="text" name="last_name" class="form-control form-control-sm" required
-								value="<?php echo isset($last_name) ? $last_name : 'Last' ?>">
+								value="<?php echo isset($last_name) ? $last_name : 'Majid' ?>">
 						</div>
 						<div class="form-group">
 							<label for="education" class="control-label">Education</label>
@@ -188,33 +340,41 @@ if (!isset($conn)) {
 							<input type="text" name="conditions_for_discount" class="form-control form-control-sm"
 								value="<?php echo isset($conditions_for_discount) ? $conditions_for_discount : 'None' ?>">
 						</div>
-						
+
 					</div>
 					<div class="col-md-6">
+
 						<div class="form-group">
 							<label for="chemist_photo" class="control-label">Chemist Photo</label>
 							<div class="custom-file">
-								<input type="file" class="custom-file-input" id="chemist_photo" name="chemist_photo"
-									accept="image/*" onchange="displayImage(this, 'chemist_image_preview')">
+								<?php if ($mode !== 'view') { // Check if not in view mode ?>
+									<input type="file" class="custom-file-input" id="chemist_photo" name="chemist_photo"
+										accept="image/*" onchange="displayImage(this, 'chemist_image_preview')">
+								<?php } ?>
 								<label class="custom-file-label" for="chemist_photo">
 									<i class="fas fa-image" style="font-size: 1.5rem;"></i> Upload Image
 								</label>
 							</div>
-							<img id="chemist_image_preview" src="" alt="Uploaded Chemist Photo"
-								style="max-width: 100px; max-height: 100px; display: none;">
+							<img id="chemist_image_preview" src="<?php echo $chemistImage; ?>"
+								alt="Uploaded Chemist Photo"
+								style="max-width: 180px; max-height: 180px; margin-top:10px; <?php echo ($mode === 'view' || $mode == 'edit') ? '' : 'display: none;'; ?>">
 						</div>
+
 						<div class="form-group">
 							<label for="shop_photo" class="control-label">Shop Photo</label>
 							<div class="custom-file">
-								<input type="file" class="custom-file-input" id="shop_photo" name="shop_photo"
-									accept="image/*" onchange="displayImage(this, 'shop_image_preview')">
+								<?php if ($mode !== 'view') { // Check if not in view mode ?>
+									<input type="file" class="custom-file-input" id="shop_photo" name="shop_photo"
+										accept="image/*" onchange="displayImage(this, 'shop_image_preview')">
+								<?php } ?>
 								<label class="custom-file-label" for="shop_photo">
 									<i class="fas fa-image" style="font-size: 1.5rem;"></i> Upload Image
 								</label>
 							</div>
-							<img id="shop_image_preview" src="" alt="Uploaded Shop Photo"
-								style="max-width: 100px; max-height: 100px; display: none;">
+							<img id="shop_image_preview" src="<?php echo $shopImage; ?>" alt="Uploaded Shop Photo"
+								style="max-width: 180px; max-height: 180px; margin-top:10px; <?php echo ($mode === 'view' || $mode == 'edit') ? '' : 'display: none;'; ?>">
 						</div>
+
 						<div class="form-group">
 							<label for="shop_open_time" class="control-label">Shop Open Time</label>
 							<input type="time" name="shop_open_time" class="form-control form-control-sm" required
@@ -229,10 +389,17 @@ if (!isset($conn)) {
 					</div>
 					<hr>
 					<div class="col-lg-12 text-right justify-content-center d-flex">
-						<button class="btn btn-primary mr-2">Save</button>
+						<!-- <button class="btn btn-primary mr-2">Save</button> -->
+						<?php if ($mode !== 'view') { ?>
+							<!-- Only display the button for editing and adding new data -->
+							<button class="btn btn-primary mr-2" type="submit">
+								<?php echo $button_text ?>
+							</button>
+						<?php } ?>
 						<button class="btn btn-secondary" type="button"
 							onclick="location.href = 'index.php?page=survey_list'">Cancel</button>
 					</div>
+
 				</div>
 			</form>
 
@@ -258,8 +425,18 @@ if (!isset($conn)) {
 		start_load();
 		$('#msg').html('');
 
+		var action = 'save_survey'; // Default action for adding new data
+
+		<?php
+		// Check if the 'mode' parameter is set to 'edit' in the URL
+		if (isset($mode) && $mode === 'edit') {
+			// If in edit mode, change the action to 'survey_edit'
+			echo "action = 'survey_edit';";
+		}
+		?>
+
 		$.ajax({
-			url: 'ajax.php?action=save_survey',
+			url: 'ajax.php?action=' + action,
 			data: new FormData($(this)[0]),
 			cache: false,
 			contentType: false,
@@ -293,14 +470,21 @@ if (!isset($conn)) {
 		});
 	});
 
-	// Display uploaded image for chemist photo
 	$('#chemist_photo').change(function (event) {
-		displayImage(event, 'preview_chemist');
+		displayImage(event, 'chemist_image_preview');
+		if ('<?php echo $mode; ?>' === 'view') {
+			// Disable the file input in view mode
+			$('#chemist_photo').prop('disabled', true);
+		}
 	});
 
 	// Display uploaded image for shop photo
 	$('#shop_photo').change(function (event) {
-		displayImage(event, 'preview_shop');
+		displayImage(event, 'shop_image_preview');
+		if ('<?php echo $mode; ?>' === 'view') {
+			// Disable the file input in view mode
+			$('#shop_photo').prop('disabled', true);
+		}
 	});
 
 	function displayImage(input, previewId) {

@@ -216,6 +216,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'profile_information') {
 
             function handleSubmit(event) {
                 event.preventDefault();
+                start_load();
                 var formData = new FormData(document.getElementById('profile_form'));
                 $.ajax({
                     // url: 'submit.php',
@@ -227,15 +228,18 @@ if (isset($_GET['action']) && $_GET['action'] === 'profile_information') {
                         console.log(response);
 
                         if (response.status === "success") {
+                            end_load();
                             toastr.success(response.message);
                             setTimeout(function () {
                                 window.location.href = 'index.php?page=home';
                             }, 1000);
                         } else {
+                            end_load();
                             toastr.error(response.message);
                         }
                     },
                     error: function () {
+                        end_load();
                         toastr.error('Error saving data');
                     },
                     cache: false,
@@ -279,6 +283,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'profile_information') {
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+        <?php include 'footer.php' ?>
 </body>
 
 </html>

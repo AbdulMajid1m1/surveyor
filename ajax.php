@@ -23,6 +23,10 @@ if ($action == 'save_survey') {
 	$survey_result = $crud->saveSurvey($conn, $_FILES, $_POST);
 }
 
+if ($action == 'survey_edit') {
+	$survey_result = $crud->editSurvey($conn, $_FILES, $_POST);
+}
+
 
 if ($action == 'save_user') {
 	$save = $crud->save_user();
