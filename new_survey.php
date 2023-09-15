@@ -126,7 +126,7 @@ if (isset($mode) && $mode === 'edit') {
 	$contact_number_2 = '987-654-3210';
 	$email_id = 'email@example.com';
 	$license_status = 'owned'; // Default to 'owned'
-	$lic_holder_name = 'License Holder';
+	$lic_holder_name = '';
 	$relation = 'Relation';
 	$validity = '2023-09-13'; // Default date value
 	$business_age = '5';
@@ -224,17 +224,22 @@ if (isset($mode) && $mode === 'edit') {
 						</div>
 						<div class="form-group">
 							<label for="license_status" class="control-label">License Status (लाइसेंस की स्थिति)</label>
-							<select name="license_status" class="form-control form-control-sm" required <?php echo $disabled; ?>>
+							<select name="license_status" class="form-control form-control-sm" id="license_status"
+								required <?php echo $disabled; ?>>
 								<option value="owned" <?php echo (isset($license_status) && $license_status == 'owned') ? 'selected' : ''; ?>>Owned</option>
 								<option value="rented" <?php echo (isset($license_status) && $license_status == 'rented') ? 'selected' : ''; ?>>Rented</option>
 							</select>
 						</div>
-						<div class="form-group">
+						<div class="form-group" id="lic_holder_name_group"
+							style="<?php echo (isset($license_status) && $license_status == 'rented') ? 'display: block;' : 'display: none;'; ?>">
 							<label for="lic_holder_name" class="control-label">License Holder Name (लाइसेंस धारक का
 								नाम)</label>
-							<input type="text" name="lic_holder_name" class="form-control form-control-sm"
-								value="<?php echo isset($lic_holder_name) ? $lic_holder_name : '' ?>" <?php echo $disabled; ?>>
+							<input type="text" name="lic_holder_name" id="lic_holder_name"
+								class="form-control form-control-sm"
+								value="<?php echo isset($lic_holder_name) ? $lic_holder_name : '' ?>" <?php echo ($license_status == 'rented') ? 'required' : ''; ?> <?php echo $disabled; ?>>
 						</div>
+
+
 						<div class="form-group">
 							<label for="relation" class="control-label">Relation (संबंध)</label>
 							<input type="text" name="relation" class="form-control form-control-sm"
@@ -437,6 +442,17 @@ if (isset($mode) && $mode === 'edit') {
 	</div>
 </div>
 <script>
+	document.getElementById("license_status").addEventListener("change", function () {
+		var selectedValue = this.value;
+		var licHolderNameGroup = document.getElementById("lic_holder_name_group");
+
+		// Show or hide the license holder name field based on the selected value
+		if (selectedValue === "rented") {
+			licHolderNameGroup.style.display = "block";
+		} else {
+			licHolderNameGroup.style.display = "none";
+		}
+	});
 
 	function findLocation() {
 		if (navigator.geolocation) {
@@ -446,11 +462,27 @@ if (isset($mode) && $mode === 'edit') {
 		}
 	}
 
+
+
 	function showPosition(position) {
 		document.getElementById('gps_coordinates').value = position.coords.latitude + ", " + position.coords.longitude;
 	}
 	$('#manage_survey').submit(function (e) {
 		e.preventDefault();
+		if ('<?php echo $mode; ?>' !== 'edit' && '<?php echo $mode; ?>' !== 'view') {
+			if ($('#chemist_photo').val() == '' || $('#shop_photo').val() == '') {
+				alert_toast("Both Chemist Photo and Shop Photo are required.", "error");
+				return false;
+			}
+		}
+		if ($('#license_status').val() == 'rented') {
+			if ($('#lic_holder_name').val() == '') {
+
+				alert_toast("License Holder Name is required.", "error");
+				return false;
+			}
+		}
+
 		$('input').removeClass("border-danger");
 		start_load();
 		$('#msg').html('');
@@ -464,6 +496,7 @@ if (isset($mode) && $mode === 'edit') {
 			echo "action = 'survey_edit';";
 		}
 		?>
+
 
 		$.ajax({
 			url: 'ajax.php?action=' + action,
