@@ -142,7 +142,7 @@ include 'header.php'
 
   @media (max-width: 500px) {
     .content-wrapper>.content {
-    padding: 0 0;
+    padding: 0 0.rem;
 }
   }
 </style>

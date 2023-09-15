@@ -69,7 +69,7 @@
 		}
 
 		@media (max-width: 500px) {
-			
+
 			.main-container {
 				height: 100dvh;
 				overflow-y: scroll;
@@ -181,6 +181,7 @@
 		}
 		$('#login_form').submit(function (e) {
 			e.preventDefault()
+			start_load();
 			$('#login-form button[type="button"]').attr('disabled', true).html('Logging in...');
 			if ($(this).find('.alert-danger').length > 0)
 				$(this).find('.alert-danger').remove();
@@ -195,8 +196,10 @@
 				},
 				success: function (resp) {
 					if (resp == 1) {
+						end_load();
 						location.href = 'index.php?page=home';
 					} else {
+						end_load();
 						// $('#login-form').prepend('<div class="alert alert-danger">Username or password is incorrect.</div>')
 						// use toastr to show error message
 						toastr.error('Username or password is incorrect.');
@@ -246,6 +249,7 @@
 			});
 
 			function ajaxFormSubmit(action) {
+				start_load();
 				$.ajax({
 					url: 'ajax2.php',
 					type: 'POST',
@@ -253,42 +257,49 @@
 					dataType: 'json',
 					success: function (response) {
 						if (response.status === 'error') {
+							end_load();
 							toastr.error(response.message);
 							if (response.otp_active) {
 								$('#otp_section').show();
 								$('#surveyor_id').val(response.surveyor_id);
 							}
 						} else if (response.status === 'success') {
+							end_load();
 							toastr.success(response.message);
 							// hide the save button
 							$('#save_button').hide();
 							$('#otp_section').show();
 							$('#surveyor_id').val(response.surveyor_id);
 						} else if (response.status === 'verified') {
+							end_load();
 							toastr.success(response.message);
 							setTimeout(function () {
 								window.location.href = 'index.php';
-							}, 1500);
+							}, 1000);
 						}
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
 						console.log(textStatus, errorThrown);
-
+						end_load();
 						if (textStatus === 'parsererror') {
 							try {
+								end_load();
 								var responseText = jqXHR.responseText;
 								if (responseText && responseText.startsWith('<')) {
 									// This means the response is probably an HTML error page
 									toastr.error('An error occurred: Invalid Response from Server');
 									console.error('An error occurred: the response is not valid JSON: ', responseText);
 								} else {
+
 									toastr.error('An error occurred: ' + textStatus + ' - ' + errorThrown);
 								}
 							} catch (e) {
+
 								toastr.error('An error occurred: Unknown Error');
 								console.error('An unexpected error occurred:', e);
 							}
 						} else {
+
 							toastr.error('An error occurred: ' + textStatus + ' - ' + errorThrown);
 						}
 					}
@@ -298,6 +309,7 @@
 
 		});
 	</script>
+	<?php include 'footer.php' ?>
 </body>
 
 </html>
