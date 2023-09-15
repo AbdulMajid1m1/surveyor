@@ -1,4 +1,9 @@
 <?php
+include('session_time_check.php');
+?>
+<?php
+
+
 
 
 // Check if the URL contains the specified action
@@ -45,16 +50,14 @@ if (isset($_GET['action']) && $_GET['action'] === 'profile_information') {
 }
 ?>
 
-<?php
-include('session_time_check.php');
-?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>Profile Completion</title>
+    <title>Profile Details</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <?php include('./header.php'); ?>
@@ -66,7 +69,7 @@ include('session_time_check.php');
         <div class="container-fluid">
             <div class="row mb-2">
                 <div class="col-sm-6">
-                    <h1 class="m-0">Profile Completion</h1>
+                    <h1 class="m-0">Profile Details</h1>
                 </div><!-- /.col -->
                 <div class="col-sm-6 text-right"> <!-- Added a new column for the button and set it to align-right -->
                     <!-- Back Button -->
@@ -81,7 +84,7 @@ include('session_time_check.php');
     <!-- /.content-header -->
 
     <div class="container">
-        <div class="row justify-content-center">
+        <div class="inner-container row justify-content-center">
             <div class="col-md-8">
                 <div class="card">
                     <!-- if read only is false then show text other wise not -->
@@ -96,7 +99,7 @@ include('session_time_check.php');
                         <?php } else { ?>
                             <div class="card-header">
                                 <?php echo $_SESSION['login_First_Name'] . " " . $_SESSION['login_Last_Name'] ?> Profile
-                                Details
+                                
                             <?php } ?>
 
                         </div>
@@ -105,7 +108,7 @@ include('session_time_check.php');
                             <form id="profile_form" enctype="multipart/form-data" onsubmit="handleSubmit(event)">
                                 <?php if ($readOnly == false) { ?>
                                     <div class="form-group">
-                                        <label for="photo">Photo (The photo will be saved with the 'surveyor ID')*</label>
+                                        <label for="photo">Profile Picture (प्रोफ़ाइल तस्वीर)*</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="photo" name="photo" required
                                                 onchange="displayImage(event)">
@@ -118,176 +121,189 @@ include('session_time_check.php');
                                     </div>
 
                                 <?php } else { ?>
-
-
-                                    <!-- show iamge using src  $image -->
-
+                                    <!-- show image using src  $image -->
                                     <img id="preview" src="<?php echo $image; ?>" alt="Uploaded Image"
                                         style="display:block; width:100px; height:100px; margin-top:10px;" />
-
                                 <?php } ?>
 
-
-
-
-                                <!-- Aadhar Card Number (12 digits) -->
                                 <div class="form-group">
-                                    <label>Aadhar Card Number (12 digits)*</label>
+                                    <label>Aadhar Card Number (आधार कार्ड नंबर)*</label>
                                     <input type="text" name="aadhar_card_number" class="form-control"
                                         title="Please enter a valid Aadhar card number" required
                                         value="<?php echo $aadhar_card_number; ?>" <?php echo $disabled; ?>>
                                 </div>
 
-                                <!-- PAN Card Number (should be 10 characters long) -->
                                 <div class="form-group">
-                                    <label>PAN Card Number (should be 10 characters long)*</label>
+                                    <label>PAN Card Number (पैन कार्ड नंबर)*</label>
                                     <input type="text" name="pan_card_number" class="form-control"
                                         title="Please enter a valid PAN card number" required
                                         value="<?php echo $pan_card_number; ?>" <?php echo $disabled; ?>>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Driving License Number*</label>
+                                    <label>Driving License Number (ड्राइविंग लाइसेंस नंबर)*</label>
                                     <input type="text" name="driving_license_number" class="form-control" required
                                         value="<?php echo $driving_license_number; ?>" <?php echo $disabled; ?>>
-
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Email ID*</label>
+                                    <label>Email ID (ईमेल ID)*</label>
                                     <input type="email" name="email_id" class="form-control" required
                                         value="<?php echo $email_id; ?>" <?php echo $disabled; ?>>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Village*</label>
+                                    <label>Village (गाँव)*</label>
                                     <input type="text" name="village" class="form-control" required
                                         value="<?php echo $village; ?>" <?php echo $disabled; ?>>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Tehsil*</label>
+                                    <label>Tehsil (तहसील)*</label>
                                     <input type="text" name="tehsil" class="form-control" required
                                         value="<?php echo $tehsil; ?>" <?php echo $disabled; ?>>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>City*</label>
+                                    <label>City (शहर)*</label>
                                     <input type="text" name="city" class="form-control" required
                                         value="<?php echo $city; ?>" <?php echo $disabled; ?>>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>District*</label>
+                                    <label>District (जिला)*</label>
                                     <input type="text" name="district" class="form-control" required
                                         value="<?php echo $district; ?>" <?php echo $disabled; ?>>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>State*</label>
+                                    <label>State (राज्य)*</label>
                                     <input type="text" name="state" class="form-control" required
                                         value="<?php echo $state; ?>" <?php echo $disabled; ?>>
                                 </div>
 
                                 <div class="form-group">
-                                    <label>Country*</label>
+                                    <label>Country (देश)*</label>
                                     <input type="text" name="country" class="form-control" required
                                         value="<?php echo $country; ?>" <?php echo $disabled; ?>>
                                 </div>
 
-
-
-
                                 <!-- Submit Button -->
                                 <button type="submit" class="btn btn-primary"
-                                    style="<?php echo $submitButtonStyle; ?>">Submit</button>
+                                    style="<?php echo $submitButtonStyle; ?>">Submit (जमा करें)</button>
+
                             </form>
+
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    </div>
 
-        <script>
-            // JavaScript function to navigate back
-            function goBack() {
-                window.history.back();
-            }
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
-            function handleSubmit(event) {
-                event.preventDefault();
-                start_load();
-                var formData = new FormData(document.getElementById('profile_form'));
-                $.ajax({
-                    // url: 'submit.php',
-                    url: 'ajax.php?action=profile_completion',
-                    type: 'POST',
-                    data: formData,
-                    success: function (response) {
-                        response = JSON.parse(response);
-                        console.log(response);
+    <script>
+        // JavaScript function to navigate back
+        function goBack() {
+            window.history.back();
+        }
 
-                        if (response.status === "success") {
-                            end_load();
-                            toastr.success(response.message);
-                            setTimeout(function () {
-                                window.location.href = 'index.php?page=home';
-                            }, 1000);
-                        } else {
-                            end_load();
-                            toastr.error(response.message);
-                        }
-                    },
-                    error: function () {
+        function handleSubmit(event) {
+            event.preventDefault();
+            start_load();
+            var formData = new FormData(document.getElementById('profile_form'));
+            $.ajax({
+                // url: 'submit.php',
+                url: 'ajax.php?action=profile_completion',
+                type: 'POST',
+                data: formData,
+                success: function (response) {
+                    response = JSON.parse(response);
+                    console.log(response);
+
+                    if (response.status === "success") {
                         end_load();
-                        toastr.error('Error saving data');
-                    },
-                    cache: false,
-                    contentType: false,
-                    processData: false
-                });
+                        toastr.success(response.message);
+                        setTimeout(function () {
+                            window.location.href = 'index.php?page=home';
+                        }, 1000);
+                    } else {
+                        end_load();
+                        toastr.error(response.message);
+                    }
+                },
+                error: function () {
+                    end_load();
+                    toastr.error('Error saving data');
+                },
+                cache: false,
+                contentType: false,
+                processData: false
+            });
+        }
+
+        function displayImage(event) {
+            var reader = new FileReader();
+            reader.onload = function () {
+                var output = document.getElementById('preview');
+                output.src = reader.result;
+                output.style.display = 'block';
+            };
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #f8cbad;
+        }
+
+
+        .card {
+            background-color: #f8cbad;
+            box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+
+        }
+
+        .btn-file {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-file input[type=file] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            font-size: 100px;
+            text-align: right;
+            filter: alpha(opacity=0);
+            opacity: 0;
+            background: red;
+            cursor: inherit;
+            display: block;
+        }
+
+        @media (max-width: 500px) {
+
+
+            .card {
+                background-color: #f8cbad;
+                box-shadow: none;
+
             }
 
-            function displayImage(event) {
-                var reader = new FileReader();
-                reader.onload = function () {
-                    var output = document.getElementById('preview');
-                    output.src = reader.result;
-                    output.style.display = 'block';
-                };
-                reader.readAsDataURL(event.target.files[0]);
-            }
-        </script>
-
-        <style>
-            .btn-file {
-                position: relative;
-                overflow: hidden;
-            }
-
-            .btn-file input[type=file] {
-                position: absolute;
-                top: 0;
-                right: 0;
-                min-width: 100%;
-                min-height: 100%;
-                font-size: 100px;
-                text-align: right;
-                filter: alpha(opacity=0);
-                opacity: 0;
-                background: red;
-                cursor: inherit;
-                display: block;
-            }
-        </style>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-        <?php include 'footer.php' ?>
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+    <?php include 'footer.php' ?>
 </body>
 
 </html>

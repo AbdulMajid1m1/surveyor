@@ -10,7 +10,7 @@
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 	<style>
 		body {
-			background-color: #f8f9fa;
+			background-color: #f8cbad;
 			width: 100%;
 			height: 100vh;
 			display: flex;
@@ -23,7 +23,8 @@
 			width: 100%;
 			background: #fff;
 			border-radius: 10px;
-			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+			background-color: #f8cbad;
 			overflow: hidden;
 			padding: 20px;
 			transition: all 0.3s;
@@ -66,6 +67,17 @@
 				font-size: 1rem;
 			}
 		}
+
+		@media (max-width: 500px) {
+			
+			.main-container {
+				height: 100dvh;
+				overflow-y: scroll;
+				padding top: 5px;
+				box-shadow: none;
+
+			}
+		}
 	</style>
 </head>
 
@@ -93,58 +105,60 @@
 				aria-labelledby="pills-signup-tab">
 				<form id="user_form">
 					<div class="form-group">
-						<label for="first_name">First Name</label>
+						<label for="first_name">First Name (पहला नाम)</label>
 						<input type="text" id="first_name" name="first_name" class="form-control" required>
 					</div>
 					<div class="form-group">
-						<label for="middle_name">Middle Name</label>
+						<label for="middle_name">Middle Name (मध्य नाम)</label>
 						<input type="text" id="middle_name" name="middle_name" class="form-control">
 					</div>
 					<div class="form-group">
-						<label for="last_name">Last Name</label>
+						<label for="last_name">Last Name (आखिरी नाम)</label>
 						<input type="text" id="last_name" name="last_name" class="form-control" required>
 					</div>
 
 					<div class="form-group">
-						<label for="mobile_number">Mobile Number</label>
+						<label for="mobile_number">Mobile Number (मोबाइल नंबर)</label>
 						<input type="text" id="mobile_number" name="mobile_number" class="form-control" required
 							pattern="[0-9]{10}" onkeypress="return isNumberKey(event)" oninput="validateInput(this)">
 					</div>
 					<div class="form-group">
-						<label for="signup_password">Password</label>
+						<label for="signup_password">Password (पासवर्ड)</label>
 						<input type="password" id="signup_password" name="signup_password" class="form-control"
 							required>
 					</div>
 					<input type="hidden" name="action" value="save">
-					<button type="button" id="save_button" class="btn btn-primary btn-block">Save</button>
+					<button type="button" id="save_button" class="btn btn-primary btn-block">Save (सेव करें)</button>
 
 					<div id="otp_section" style="display: none;">
 						<div class="form-group">
-							<label for="otp">Enter OTP</label>
+							<label for="otp">Enter OTP (ओटीपी दर्ज करें)</label>
 							<input type="text" id="otp" name="otp" class="form-control" required>
 						</div>
 						<input type="hidden" name="surveyor_id" id="surveyor_id">
-						<button type="button" id="verify_otp_button" class="btn btn-secondary btn-block">Verify
-							OTP</button>
+						<button type="button" id="verify_otp_button" class="btn btn-secondary btn-block">Verify OTP
+							(ओटीपी सत्यापित करें)</button>
 					</div>
 
 					<div id="error_message" class="alert alert-danger" style="display: none;"></div>
 				</form>
+
 			</div>
 			<div class="tab-pane fade section login-section" id="pills-login" role="tabpanel"
 				aria-labelledby="pills-login-tab">
 				<form id="login_form">
 					<div class="form-group">
-						<label for="login_mobile_number">Mobile Number</label>
+						<label for="login_mobile_number">Mobile Number (मोबाइल नंबर)</label>
 						<input type="text" id="login_mobile_number" name="login_mobile_number" class="form-control"
 							required>
 					</div>
 					<div class="form-group">
-						<label for="login_password">Password</label>
+						<label for="login_password">Password (पासवर्ड)</label>
 						<input type="password" id="login_password" name="login_password" class="form-control" required>
 					</div>
-					<button type="submit" id="login_button" class="btn btn-primary btn-block">Login</button>
+					<button type="submit" id="login_button" class="btn btn-primary btn-block">Login (लॉग इन)</button>
 				</form>
+
 			</div>
 		</div>
 	</div>

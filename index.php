@@ -117,18 +117,35 @@ include 'header.php'
     <!-- /.control-sidebar -->
 
     <!-- Main Footer -->
-    <footer class="main-footer">
-      <div class="float-right d-none d-sm-inline-block">
-        <b>Online Survey System</b>
+    <footer class="main-footer text-right py-3 fixed-bottom">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <strong>Online Survey System</strong>
+          </div>
+        </div>
       </div>
     </footer>
-  </div>
-  <!-- ./wrapper -->
 
-  <!-- REQUIRED SCRIPTS -->
-  <!-- jQuery -->
-  <!-- Bootstrap -->
-  <?php include 'footer.php' ?>
+    <!-- ./wrapper -->
+
+    <!-- REQUIRED SCRIPTS -->
+    <!-- jQuery -->
+    <!-- Bootstrap -->
+    <?php include 'footer.php' ?>
 </body>
+<style>
+  body {
+    padding-bottom: 50px;
+  }
+
+
+  @media (max-width: 500px) {
+    .content-wrapper>.content {
+    padding: 0 0;
+}
+  }
+</style>
+
 
 </html>

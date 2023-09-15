@@ -1,4 +1,3 @@
-
 <?php
 if (!isset($conn)) {
 	include 'db_connect.php';
@@ -55,7 +54,7 @@ if (isset($mode) && $mode === 'edit') {
 		$chemistImage = $row['chemist_photo'];
 		$shopImage = $row['shop_photo'];
 
-		$button_text = 'Update'; // Change the button text to "Update"
+		$button_text = 'Update (अपडेट करें)'; // Button text for updating data 
 		$form_action = 'update_survey'; // Change the form action to the update process
 		$disabled = ''; // Enable input fields for editing
 	}
@@ -154,7 +153,7 @@ if (isset($mode) && $mode === 'edit') {
 	$shop_close_time = '20:00';
 	$chemistImage = '';
 	$shopImage = '';
-	$button_text = 'Save'; // Button text for saving data
+	$button_text = 'Save (सहेजें)'; // Button text for saving data
 	$disabled = ''; // Enable input fields for editing
 
 }
@@ -169,182 +168,198 @@ if (isset($mode) && $mode === 'edit') {
 				<div class="row">
 					<div class="col-md-6 border-right">
 						<div class="form-group">
-							<label for="first_name" class="control-label">First Name</label>
+							<label for="first_name" class="control-label">First Name (पहला नाम)</label>
 							<input type="text" name="first_name" class="form-control form-control-sm" required
 								value="<?php echo isset($first_name) ? $first_name : 'Abdul' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="middle_name" class="control-label">Middle Name</label>
+							<label for="middle_name" class="control-label">Middle Name (मध्य नाम)</label>
 							<input type="text" name="middle_name" class="form-control form-control-sm"
 								value="<?php echo isset($middle_name) ? $middle_name : 'Middle' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="last_name" class="control-label">Last Name</label>
+							<label for="last_name" class="control-label">Last Name (आखिरी नाम)</label>
 							<input type="text" name="last_name" class="form-control form-control-sm" required
 								value="<?php echo isset($last_name) ? $last_name : '' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="education" class="control-label">Education</label>
+							<label for="education" class="control-label">Education (शिक्षा)</label>
 							<input type="text" name="education" class="form-control form-control-sm" required
 								value="<?php echo isset($education) ? $education : '' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="firm_name" class="control-label">Firm Name</label>
+							<label for="firm_name" class="control-label">Firm Name (फर्म का नाम)</label>
 							<input type="text" name="firm_name" class="form-control form-control-sm" required
 								value="<?php echo isset($firm_name) ? $firm_name : '' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="address" class="control-label">Address</label>
+							<label for="address" class="control-label">Address (पता)</label>
 							<textarea name="address" id="address" cols="30" rows="4" class="form-control" required <?php echo $disabled; ?>><?php echo isset($address) ? $address : '' ?></textarea>
 						</div>
 						<div class="form-group">
-							<label for="gps_coordinates" class="control-label">GPS Coordinates</label>
+							<label for="gps_coordinates" class="control-label">GPS Coordinates (जीपीएस
+								निर्देशांक)</label>
 							<input type="text" name="gps_coordinates" id="gps_coordinates"
 								class="form-control form-control-sm" required placeholder="Latitude, Longitude"
 								value="<?php echo isset($gps_coordinates) ? $gps_coordinates : '' ?>" <?php echo $disabled; ?>>
 							<button type="button" class="btn custom-btn" onclick="findLocation()">Find Your
-								Location</button>
+								Location (अपना स्थान ढूंढें)</button>
 						</div>
 						<div class="form-group">
-							<label for="contact_number_1" class="control-label">Contact Number 1</label>
+							<label for="contact_number_1" class="control-label">Contact Number 1 (संपर्क नंबर 1)</label>
 							<input type="text" name="contact_number_1" class="form-control form-control-sm" required
 								value="<?php echo isset($contact_number_1) ? $contact_number_1 : '123-456-7890' ?>"
 								<?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="contact_number_2" class="control-label">Contact Number 2</label>
+							<label for="contact_number_2" class="control-label">Contact Number 2 (संपर्क नंबर 2)</label>
 							<input type="text" name="contact_number_2" class="form-control form-control-sm"
 								value="<?php echo isset($contact_number_2) ? $contact_number_2 : '987-654-3210' ?>"
 								<?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="email_id" class="control-label">Email ID</label>
+							<label for="email_id" class="control-label">Email ID (ईमेल आईडी)</label>
 							<input type="email" name="email_id" class="form-control form-control-sm" required
 								value="<?php echo isset($email_id) ? $email_id : 'email@example.com' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="license_status" class="control-label">License Status</label>
+							<label for="license_status" class="control-label">License Status (लाइसेंस की स्थिति)</label>
 							<select name="license_status" class="form-control form-control-sm" required <?php echo $disabled; ?>>
 								<option value="owned" <?php echo (isset($license_status) && $license_status == 'owned') ? 'selected' : ''; ?>>Owned</option>
 								<option value="rented" <?php echo (isset($license_status) && $license_status == 'rented') ? 'selected' : ''; ?>>Rented</option>
 							</select>
 						</div>
 						<div class="form-group">
-							<label for="lic_holder_name" class="control-label">License Holder Name</label>
+							<label for="lic_holder_name" class="control-label">License Holder Name (लाइसेंस धारक का
+								नाम)</label>
 							<input type="text" name="lic_holder_name" class="form-control form-control-sm"
 								value="<?php echo isset($lic_holder_name) ? $lic_holder_name : '' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="relation" class="control-label">Relation</label>
+							<label for="relation" class="control-label">Relation (संबंध)</label>
 							<input type="text" name="relation" class="form-control form-control-sm"
 								value="<?php echo isset($relation) ? $relation : 'Relation' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="validity" class="control-label">Validity</label>
+							<label for="validity" class="control-label">Validity (मान्यता)</label>
 							<input type="date" name="validity" class="form-control form-control-sm" required <?php echo $disabled; ?> value="<?php echo isset($validity) ? $validity : '2023-09-13' ?>">
 						</div>
 						<!-- Add input fields for other columns here -->
 						<div class="form-group">
-							<label for="business_age" class="control-label">Business Age</label>
+							<label for="business_age" class="control-label">Business Age (व्यापार की आयु)</label>
 							<input type="text" name="business_age" class="form-control form-control-sm" <?php echo $disabled; ?> value="<?php echo isset($business_age) ? $business_age : '' ?>">
 						</div>
 						<div class="form-group">
-							<label for="total_investment" class="control-label">Total Investment</label>
+							<label for="total_investment" class="control-label">Total Investment (कुल निवेश)</label>
 							<input type="text" name="total_investment" class="form-control form-control-sm" <?php echo $disabled; ?> value="<?php echo isset($total_investment) ? $total_investment : '' ?>">
 						</div>
 						<div class="form-group">
 							<label for="total_investment_inventory" class="control-label">Total Investment
-								Inventory</label>
+								Inventory (कुल निवेश सूची)</label>
 							<input type="text" name="total_investment_inventory" class="form-control form-control-sm"
 								value="<?php echo isset($total_investment_inventory) ? $total_investment_inventory : '' ?>"
 								<?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="avg_sale_per_day" class="control-label">Average Sale per Day</label>
+							<label for="avg_sale_per_day" class="control-label">Average Sale per Day (दिन भर में औसत
+								बिक्री)</label>
 							<input type="text" name="avg_sale_per_day" class="form-control form-control-sm"
 								value="<?php echo isset($avg_sale_per_day) ? $avg_sale_per_day : '' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="avg_expenses_per_day" class="control-label">Average Expenses per Day</label>
+							<label for="avg_expenses_per_day" class="control-label">Average Expenses per Day (दिन भर की
+								औसत व्यय)</label>
 							<input type="text" name="avg_expenses_per_day" class="form-control form-control-sm"
 								value="<?php echo isset($avg_expenses_per_day) ? $avg_expenses_per_day : '' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="inventory_rotation" class="control-label">Inventory Rotation</label>
+							<label for="inventory_rotation" class="control-label">Inventory Rotation (सूची
+								परिसंचारण)</label>
 							<input type="text" name="inventory_rotation" class="form-control form-control-sm"
 								value="<?php echo isset($inventory_rotation) ? $inventory_rotation : '' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="avg_shelf_life" class="control-label">Average Shelf Life</label>
+							<label for="avg_shelf_life" class="control-label">Average Shelf Life (औसत शेल्फ
+								जीवन)</label>
 							<input type="text" name="avg_shelf_life" class="form-control form-control-sm"
 								value="<?php echo isset($avg_shelf_life) ? $avg_shelf_life : '' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="max_stock_wait_days" class="control-label">Max Stock Wait Days</label>
+							<label for="max_stock_wait_days" class="control-label">Max Stock Wait Days (अधिकतम स्टॉक
+								प्रतीक्षा दिन)</label>
 							<input type="text" name="max_stock_wait_days" class="form-control form-control-sm"
 								value="<?php echo isset($max_stock_wait_days) ? $max_stock_wait_days : '' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="unsellable_stock_count" class="control-label">Unsellable Stock Count</label>
+							<label for="unsellable_stock_count" class="control-label">Unsellable Stock Count (बेचने
+								योग्य स्टॉक की गणना)</label>
 							<input type="text" name="unsellable_stock_count" class="form-control form-control-sm"
 								value="<?php echo isset($unsellable_stock_count) ? $unsellable_stock_count : '' ?>"
 								<?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="unsellable_stock_cost" class="control-label">Unsellable Stock Cost</label>
+							<label for="unsellable_stock_cost" class="control-label">Unsellable Stock Cost (बेचने योग्य
+								स्टॉक की लागत)</label>
 							<input type="text" name="unsellable_stock_cost" class="form-control form-control-sm"
 								value="<?php echo isset($unsellable_stock_cost) ? $unsellable_stock_cost : '' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="computer_at_shop" class="control-label">Computer at Shop</label>
+							<label for="computer_at_shop" class="control-label">Computer at Shop (दुकान पर
+								कंप्यूटर)</label>
 							<input type="text" name="computer_at_shop" class="form-control form-control-sm"
 								value="<?php echo isset($computer_at_shop) ? $computer_at_shop : '' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="internet_available" class="control-label">Internet Available</label>
+							<label for="internet_available" class="control-label">Internet Available (इंटरनेट
+								उपलब्ध)</label>
 							<input type="text" name="internet_available" class="form-control form-control-sm"
 								value="<?php echo isset($internet_available) ? $internet_available : '' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
 							<label for="inventory_management_software" class="control-label">Inventory Management
-								Software</label>
+								Software (सूची प्रबंधन सॉफ़्टवेयर)</label>
 							<input type="text" name="inventory_management_software" class="form-control form-control-sm"
 								value="<?php echo isset($inventory_management_software) ? $inventory_management_software : '' ?>"
 								<?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="shop_area" class="control-label">Shop Area</label>
+							<label for="shop_area" class="control-label">Shop Area (दुकान का क्षेत्र)</label>
 							<input type="text" name="shop_area" class="form-control form-control-sm"
 								value="<?php echo isset($shop_area) ? $shop_area : '' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="sale_dependency" class="control-label">Sale Dependency</label>
+							<label for="sale_dependency" class="control-label">Sale Dependency (बिक्री की
+								आश्रितता)</label>
 							<input type="text" name="sale_dependency" class="form-control form-control-sm"
 								value="<?php echo isset($sale_dependency) ? $sale_dependency : '' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="hospitals_5km" class="control-label">Hospitals Within 5km</label>
+							<label for="hospitals_5km" class="control-label">Hospitals Within 5km (5km के भीतर
+								अस्पताल)</label>
 							<input type="text" name="hospitals_5km" class="form-control form-control-sm"
 								value="<?php echo isset($hospitals_5km) ? $hospitals_5km : '' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="hospitals_list" class="control-label">List of Hospitals</label>
+							<label for="hospitals_list" class="control-label">List of Hospitals (अस्पतालों की
+								सूची)</label>
 							<input type="text" name="hospitals_list" class="form-control form-control-sm"
 								value="<?php echo isset($hospitals_list) ? $hospitals_list : '' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="distributors_per_month" class="control-label">Distributors Per Month</label>
+							<label for="distributors_per_month" class="control-label">Distributors Per Month (प्रति माह
+								वितरक)</label>
 							<input type="text" name="distributors_per_month" class="form-control form-control-sm"
 								value="<?php echo isset($distributors_per_month) ? $distributors_per_month : '' ?>"
 								<?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="discount_range" class="control-label">Discount Range</label>
+							<label for="discount_range" class="control-label">Discount Range (छूट की सीमा)</label>
 							<input type="text" name="discount_range" class="form-control form-control-sm"
 								value="<?php echo isset($discount_range) ? $discount_range : '' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="conditions_for_discount" class="control-label">Conditions for Discount</label>
+							<label for="conditions_for_discount" class="control-label">Conditions for Discount (छूट की
+								शर्तें)</label>
 							<input type="text" name="conditions_for_discount" class="form-control form-control-sm"
 								value="<?php echo isset($conditions_for_discount) ? $conditions_for_discount : '' ?>"
 								<?php echo $disabled; ?>>
@@ -354,7 +369,7 @@ if (isset($mode) && $mode === 'edit') {
 					<div class="col-md-6">
 
 						<div class="form-group">
-							<label for="chemist_photo" class="control-label">Chemist Photo</label>
+							<label for="chemist_photo" class="control-label">Chemist Photo (रसायनशाला का फ़ोटो)</label>
 							<div class="custom-file">
 								<?php if ($mode !== 'view') { // Check if not in view mode ?>
 									<input type="file" class="custom-file-input" id="chemist_photo" name="chemist_photo"
@@ -372,7 +387,7 @@ if (isset($mode) && $mode === 'edit') {
 						</div>
 
 						<div class="form-group">
-							<label for="shop_photo" class="control-label">Shop Photo</label>
+							<label for="shop_photo" class="control-label">Shop Photo (दुकान का फ़ोटो)</label>
 							<div class="custom-file">
 								<?php if ($mode !== 'view') { // Check if not in view mode ?>
 									<input type="file" class="custom-file-input" id="shop_photo" name="shop_photo"
@@ -389,12 +404,14 @@ if (isset($mode) && $mode === 'edit') {
 						</div>
 
 						<div class="form-group">
-							<label for="shop_open_time" class="control-label">Shop Open Time</label>
+							<label for="shop_open_time" class="control-label">Shop Open Time (दुकान खुलने का
+								समय)</label>
 							<input type="time" name="shop_open_time" class="form-control form-control-sm" required
 								value="<?php echo isset($shop_open_time) ? $shop_open_time : '' ?>" <?php echo $disabled; ?>>
 						</div>
 						<div class="form-group">
-							<label for="shop_close_time" class="control-label">Shop Close Time</label>
+							<label for="shop_close_time" class="control-label">Shop Close Time (दुकान बंद होने का
+								समय)</label>
 							<input type="time" name="shop_close_time" class="form-control form-control-sm" required
 								value="<?php echo isset($shop_close_time) ? $shop_close_time : '' ?>" <?php echo $disabled; ?>>
 						</div>
@@ -517,6 +534,13 @@ if (isset($mode) && $mode === 'edit') {
 
 </script>
 <style>
+	.card {
+		background-color: #f8cbad;
+		box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+
+
+	}
+
 	.custom-btn {
 		background-color: #008cba;
 		border: none;
