@@ -1,5 +1,5 @@
 <?php
-session_start();
+
 
 // Check if the URL contains the specified action
 if (isset($_GET['action']) && $_GET['action'] === 'profile_information') {
@@ -43,6 +43,10 @@ if (isset($_GET['action']) && $_GET['action'] === 'profile_information') {
     // Hide back button
     $backButtonStyle = 'display: none;';
 }
+?>
+
+<?php
+include('session_time_check.php');
 ?>
 <!DOCTYPE html>
 <html lang="en">

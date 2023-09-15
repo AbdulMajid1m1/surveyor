@@ -1,7 +1,9 @@
+
 <?php
 if (!isset($conn)) {
 	include 'db_connect.php';
 }
+
 
 // Check if the 'mode' parameter is set to 'edit' in the URL
 if (isset($mode) && $mode === 'edit') {

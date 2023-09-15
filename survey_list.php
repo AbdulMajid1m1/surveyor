@@ -7,7 +7,7 @@
 					href="./index.php?page=new_survey"><i class="fa fa-plus"></i> Add New Survey</a>
 			</div>
 		</div>
-		<div class="card-body">
+		<div class="table-responsive" style="padding:10px">
 			<table class="table table-hover table-bordered" id="list">
 				<colgroup>
 					<col width="5%">
@@ -21,11 +21,11 @@
 				<thead>
 					<tr>
 						<th class="text-center">#</th>
-						<th>Surveyor ID</th>
 						<th>Survey Number</th>
-						<th>First Name</th>
-						<th>Last Name</th>
-						<th>Education</th>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Firm Name</th>
+						<th>Contact</th>
 						<th>Action</th>
 					</tr>
 				</thead>
@@ -41,19 +41,20 @@
 								<?php echo $i++ ?>
 							</th>
 							<td><b>
-									<?php echo $row['surveyor_id'] ?>
-								</b></td>
-							<td><b>
 									<?php echo $row['survey_no'] ?>
 								</b></td>
 							<td><b>
-									<?php echo $row['first_name'] ?>
+									<?php echo $row['first_name'] . " " . $row['last_name'] ?>
 								</b></td>
 							<td><b>
-									<?php echo $row['last_name'] ?>
+
+									<?php echo $row['email_id'] ?>
 								</b></td>
 							<td><b>
-									<?php echo $row['education'] ?>
+									<?php echo $row['firm_name'] ?>
+								</b></td>
+							<td><b>
+									<?php echo $row['contact_number_1'] ?>
 								</b></td>
 							<td class="text-center">
 								<div class="btn-group">

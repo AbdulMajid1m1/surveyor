@@ -1,6 +1,6 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
-  <div class="dropdown">
-    <a href="javascript:void(0)" class="brand-link dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+  <div class="">
+    <a href="javascript:void(0)" class="brand-link ">
       <span
         class="brand-image img-circle elevation-3 d-flex justify-content-center align-items-center bg-primary text-white font-weight-500"
         style="width: 38px;height:50px">
@@ -11,12 +11,7 @@
       </span>
 
     </a>
-    <div class="dropdown-menu" style="">
-      <a class="dropdown-item manage_account" href="javascript:void(0)"
-        data-id="<?php echo $_SESSION['login_Surveyor_ID'] ?>">Manage Account</a>
-      <div class="dropdown-divider"></div>
-      <a class="dropdown-item" href="ajax.php?action=logout">Logout</a>
-    </div>
+   
   </div>
   <div class="sidebar">
     <nav class="mt-2">
@@ -31,7 +26,7 @@
           </a>
 
         </li>
-        <?php if (isset($_SESSION['surveyor_id'])): ?>
+        <?php if (isset($_SESSION['login_Surveyor_ID'])): ?>
           <!-- <li class="nav-item">
             <a href="#" class="nav-link nav-edit_user">
               <i class="nav-icon fas fa-users"></i>
@@ -79,23 +74,23 @@
             </ul>
 
           </li>
-          <!-- <li class="nav-item">
-            <a href="./index.php?page=survey_report" class="nav-link nav-survey_report">
-              <i class="nav-icon fas fa-poll"></i>
-              <p>
-                Survey Report
-              </p>
-            </a>
-          </li> -->
-        <?php else: ?>
+
+
           <li class="nav-item">
-            <a href="./index.php?page=survey_widget" class="nav-link nav-survey_widget nav-answer_survey">
-              <i class="nav-icon fas fa-poll-h"></i>
+            <a href="ajax.php?action=logout" class="nav-link nav-survey_report">
+              <i class="nav-icon fas fa-sign-out-alt"></i>
               <p>
-                Survey List
+                Logout
               </p>
             </a>
           </li>
+        <?php else: ?>
+          <!-- redirect to login page -->
+
+          <script>
+            window.location.href = 'login.php';
+          </script>
+
         <?php endif; ?>
       </ul>
     </nav>

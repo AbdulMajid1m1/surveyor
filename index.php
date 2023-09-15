@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<?php session_start() ?>
+<?php
+include('session_time_check.php');
+?>
 
 <?php
 if (!isset($_SESSION['login_Surveyor_ID']))
