@@ -63,20 +63,19 @@ if (isset($_GET['action']) && $_GET['action'] === 'profile_information') {
     <?php include('./header.php'); ?>
 </head>
 
+
 <body>
     <!-- Content Header (Page header) -->
-    <div class="content-header" style="padding-top: 20px; padding-bottom:20px;">
+    <div class="content-header profile-header" style="padding-top: 20px; padding-bottom: 20px;">
         <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
+            <div class="parent-component">
+                <div class="left">
                     <h1 class="m-0">Profile Details</h1>
-                </div><!-- /.col -->
-                <div class="col-sm-6 text-right"> <!-- Added a new column for the button and set it to align-right -->
-                    <!-- Back Button -->
-                    <button type="button" class="btn btn-secondary" style="<?php echo $backButtonStyle; ?>"
-                        onclick="goBack()">Back</button>
                 </div>
-            </div><!-- /.row -->
+                <div class="right text-right"> <!-- Added a new column for the image on the right -->
+                    <img src="assets/dist/img/rxFinder.jpeg" alt="RxFinder Logo" class="img-responsive">
+                </div>
+            </div>
             <hr class="border-primary">
         </div><!-- /.container-fluid -->
     </div>
@@ -99,7 +98,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'profile_information') {
                         <?php } else { ?>
                             <div class="card-header">
                                 <?php echo $_SESSION['login_First_Name'] . " " . $_SESSION['login_Last_Name'] ?> Profile
-                                
+
                             <?php } ?>
 
                         </div>
@@ -258,9 +257,9 @@ if (isset($_GET['action']) && $_GET['action'] === 'profile_information') {
     </script>
 
     <style>
-        body {
+        /* body {
             background-color: #f8cbad;
-        }
+        } */
 
 
         .card {
@@ -289,14 +288,42 @@ if (isset($_GET['action']) && $_GET['action'] === 'profile_information') {
             display: block;
         }
 
-        @media (max-width: 500px) {
+        .parent-component {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
+        /*  media query  */
+        @media (max-width: 500px) {
+            body {
+                background-color: #f8cbad;
+            }
+
+            .parent-component {
+                display: flex;
+                flex-direction: flex-start;
+                justify-content: flex-start;
+                align-items: center;
+                gap: 10px;
+            }
+
+            .left {
+                display: none;
+            }
+
+            .profile-header {
+                padding: 0 !important;
+                padding-top: 10px !important;
+                padding-left: 1.25rem !important;
+            }
 
             .card {
                 background-color: #f8cbad;
                 box-shadow: none;
 
             }
+
 
         }
     </style>

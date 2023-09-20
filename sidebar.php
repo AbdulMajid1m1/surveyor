@@ -1,17 +1,12 @@
 <aside class="main-sidebar sidebar-dark-primary elevation-4">
   <div class="">
     <a href="javascript:void(0)" class="brand-link ">
-      <span
-        class="brand-image img-circle elevation-3 d-flex justify-content-center align-items-center bg-primary text-white font-weight-500"
-        style="width: 38px;height:50px">
-        <?php echo strtoupper(substr($_SESSION['login_First_Name'], 0, 1) . substr($_SESSION['login_Last_Name'], 0, 1)) ?>
-      </span>
       <span class="brand-text font-weight-light">
-        <?php echo ucwords($_SESSION['login_First_Name'] . ' ' . $_SESSION['login_Last_Name']) ?>
+        <img src="assets/dist/img/rxFinder.jpeg" alt="RxFinder Logo" class="RxFinder">
       </span>
 
     </a>
-   
+
   </div>
   <div class="sidebar">
     <nav class="mt-2">

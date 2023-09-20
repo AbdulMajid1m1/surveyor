@@ -26,9 +26,16 @@ class Action
 	function login()
 	{
 		extract($_POST);
+		// append +92 to mobile number
+		$login_mobile_number = "+92" . $_POST['login_mobile_number'];
 		$qry = $this->db->query("SELECT * FROM users where Mobile_Number = '" . $login_mobile_number . "' and password = '" . md5($login_password) . "' ");
 		if ($qry->num_rows > 0) {
-			foreach ($qry->fetch_array() as $key => $value) {
+			$user = $qry->fetch_array();
+			if ($user['Status'] == 0) {
+				// User status is 0, which means the user is not verified, don't allow login
+				return 2;
+			}
+			foreach ($user as $key => $value) {
 				if ($key != 'Password' && !is_numeric($key))
 					$_SESSION['login_' . $key] = $value;
 			}
@@ -37,6 +44,7 @@ class Action
 			return 3;
 		}
 	}
+
 	function logout()
 	{
 		session_destroy();

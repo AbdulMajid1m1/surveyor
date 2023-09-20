@@ -117,24 +117,36 @@ include 'header.php'
     <!-- /.control-sidebar -->
 
     <!-- Main Footer -->
-    <footer class="main-footer text-right py-3 fixed-bottom">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <strong>Online Survey System</strong>
-          </div>
+    <footer class="main-footer fixed-bottom">
+      <div class="footer-container">
+
+        <div class="inner-div">
+          <img src="assets/dist/img/rxFinder.jpeg" alt="RxFinder Logo" class="img-responsive">
         </div>
       </div>
-    </footer>
+  </div>
+  </footer>
 
-    <!-- ./wrapper -->
+  <!-- ./wrapper -->
 
-    <!-- REQUIRED SCRIPTS -->
-    <!-- jQuery -->
-    <!-- Bootstrap -->
-    <?php include 'footer.php' ?>
+  <!-- REQUIRED SCRIPTS -->
+  <!-- jQuery -->
+  <!-- Bootstrap -->
+  <?php include 'footer.php' ?>
 </body>
 <style>
+  .main-footer {
+    padding: .3rem;
+    padding-right: 8px;
+  }
+
+  .footer-container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    height: 100%;
+  }
+
   body {
     padding-bottom: 50px;
   }
@@ -142,8 +154,8 @@ include 'header.php'
 
   @media (max-width: 500px) {
     .content-wrapper>.content {
-    padding: 0 0.rem;
-}
+      padding: 0 0.rem;
+    }
   }
 </style>
 

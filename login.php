@@ -10,7 +10,7 @@
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
 	<style>
 		body {
-			background-color: #f8cbad;
+			/* background-color: #f8cbad; */
 			width: 100%;
 			height: 100vh;
 			min-height: 100vh;
@@ -20,7 +20,7 @@
 		}
 
 		.main-container {
-			max-width: 800px;
+			max-width: 600px;
 			width: 100%;
 			background: #fff;
 			border-radius: 10px;
@@ -29,6 +29,18 @@
 			overflow: hidden;
 			padding: 20px;
 			transition: all 0.3s;
+		}
+
+
+		.logo-container {
+			position: absolute;
+			top: 10px;
+			right: 10px;
+		}
+
+		.logo-container img {
+			width: 120px;
+			/* Adjust the width as necessary */
 		}
 
 		.card-header {
@@ -63,6 +75,10 @@
 			background-color: #f8f9fa;
 		}
 
+		.main-login-text {
+			margin-top: 50px;
+		}
+
 		@media (max-width: 350px) {
 			.nav-pills .nav-link {
 				font-size: 1rem;
@@ -70,6 +86,9 @@
 		}
 
 		@media (max-width: 500px) {
+			body {
+				background-color: #f8cbad;
+			}
 
 			.main-container {
 				height: 100dvh;
@@ -77,6 +96,15 @@
 				padding top: 5px;
 				box-shadow: none;
 
+			}
+
+			.logo-container {
+				left: 50%;
+				transform: translateX(-50%);
+			}
+
+			.main-login-text {
+				margin-top: 50px;
 			}
 		}
 	</style>
@@ -88,7 +116,13 @@
 
 
 		<div class="card-header">
-			Come and Join Our Survey Team
+			<div class="logo-container">
+				<img src="assets/dist/img/rxFinder.jpeg" alt="RxFinder Logo">
+			</div>
+			<p class="main-login-text">
+
+				Come and Join Our Survey Team
+			</p>
 			<div style="margin-bottom: 20px;"></div>
 			<ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
 				<li class="nav-item" role="presentation">
@@ -121,7 +155,7 @@
 					</div>
 
 					<div class="form-group">
-						<label for="mobile_number">Mobile Number (मोबाइल नंबर)</label>
+						<label for="mobile_number">Mobile Number (मोबाइल नंबर) </label>
 						<div class="input-group">
 							<div class="input-group-prepend">
 								<span class="input-group-text"
@@ -132,7 +166,8 @@
 									style="background-color: white; border-left: none; padding-left:1px;">+91</span>
 							</div>
 							<input type="text" id="mobile_number" name="mobile_number" class="form-control" required
-								pattern="[0-9]{10}" oninput="validateInput(this)" maxlength="10">
+								placeholder="Enter 10 digit mobile number" pattern="[0-9]{10}"
+								oninput="validateInput(this)" maxlength="10">
 						</div>
 					</div>
 
@@ -180,7 +215,8 @@
 							</div>
 
 							<input type="text" id="login_mobile_number" name="login_mobile_number" class="form-control"
-								pattern="[0-9]{10}" oninput="validateInput(this)" maxlength="10" required>
+								placeholder="Enter 10 digit mobile number" pattern="[0-9]{10}"
+								oninput="validateInput(this)" maxlength="10" required>
 						</div>
 					</div>
 
@@ -230,11 +266,13 @@
 					if (resp == 1) {
 						end_load();
 						location.href = 'index.php?page=home';
-					} else {
+					}
+
+					else {
 						end_load();
 						// $('#login-form').prepend('<div class="alert alert-danger">Username or password is incorrect.</div>')
 						// use toastr to show error message
-						toastr.error('Username or password is incorrect.');
+						toastr.error('Mobile Number or password is incorrect.');
 
 						$('#login-form button[type="button"]').removeAttr('disabled').html('Login');
 					}
