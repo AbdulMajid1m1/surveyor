@@ -13,10 +13,10 @@
 			background-color: #f8cbad;
 			width: 100%;
 			height: 100vh;
+			min-height: 100vh;
 			display: flex;
 			justify-content: center;
 			align-items: center;
-			min-height: 100vh;
 		}
 
 		.main-container {
@@ -85,24 +85,26 @@
 <body>
 
 	<div class="main-container">
+
+
 		<div class="card-header">
 			Come and Join Our Survey Team
 			<div style="margin-bottom: 20px;"></div>
 			<ul class="nav nav-pills mb-3 justify-content-center" id="pills-tab" role="tablist">
-				<li class="nav-item" role="presentation" style="margin-right: 10px;">
-					<button class="nav-link active" id="pills-signup-tab" data-bs-toggle="pill"
-						data-bs-target="#pills-signup" type="button" role="tab" aria-controls="pills-signup"
-						aria-selected="true">Signup</button>
-				</li>
 				<li class="nav-item" role="presentation">
-					<button class="nav-link" id="pills-login-tab" data-bs-toggle="pill" data-bs-target="#pills-login"
-						type="button" role="tab" aria-controls="pills-login" aria-selected="false">Login</button>
+					<button class="nav-link active" id="pills-login-tab" data-bs-toggle="pill"
+						data-bs-target="#pills-login" type="button" role="tab" aria-controls="pills-login"
+						aria-selected="true">Login</button>
+				</li>
+				<li class="nav-item" role="presentation" style="margin-left: 10px;">
+					<button class="nav-link" id="pills-signup-tab" data-bs-toggle="pill" data-bs-target="#pills-signup"
+						type="button" role="tab" aria-controls="pills-signup" aria-selected="false">Signup</button>
 				</li>
 			</ul>
 		</div>
 
 		<div class="tab-content" id="pills-tabContent">
-			<div class="tab-pane fade show active section signup-section" id="pills-signup" role="tabpanel"
+			<div class="tab-pane fade section signup-section" id="pills-signup" role="tabpanel"
 				aria-labelledby="pills-signup-tab">
 				<form id="user_form">
 					<div class="form-group">
@@ -157,10 +159,14 @@
 				</form>
 
 			</div>
-			<div class="tab-pane fade section login-section" id="pills-login" role="tabpanel"
+			<div class="tab-pane fade show active section login-section" id="pills-login" role="tabpanel"
 				aria-labelledby="pills-login-tab">
 				<form id="login_form">
-
+					<!-- <div class="form-group">
+						<label for="login_mobile_number">Mobile Number (मोबाइल नंबर)</label>
+						<input type="text" id="login_mobile_number" name="login_mobile_number" class="form-control"
+							required>
+					</div> -->
 					<div class="form-group">
 						<label for="login_mobile_number">Mobile Number (मोबाइल नंबर)</label>
 						<div class="input-group">
@@ -177,16 +183,16 @@
 								pattern="[0-9]{10}" oninput="validateInput(this)" maxlength="10" required>
 						</div>
 					</div>
-			</div>
-			<div class="form-group">
-				<label for="login_password">Password (पासवर्ड)</label>
-				<input type="password" id="login_password" name="login_password" class="form-control" required>
-			</div>
-			<button type="submit" id="login_button" class="btn btn-primary btn-block">Login (लॉग इन)</button>
-			</form>
 
+					<div class="form-group">
+						<label for="login_password">Password (पासवर्ड)</label>
+						<input type="password" id="login_password" name="login_password" class="form-control" required>
+					</div>
+					<button type="submit" id="login_button" class="btn btn-primary btn-block">Login (लॉग इन)</button>
+				</form>
+
+			</div>
 		</div>
-	</div>
 	</div>
 	<a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
@@ -251,6 +257,7 @@
 				// Add active class to the clicked nav-link
 				$(this).addClass('active');
 			});
+
 			$('#save_button').on('click', function () {
 				// check if first_name and mobile_number is not empty then show tostr message and return
 				if ($('#first_name').val() === '') {
