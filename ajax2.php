@@ -1,8 +1,16 @@
 <?php
+
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 session_start();
+require __DIR__ . '/vendor/autoload.php';
 include('./db_connect.php');
+use Twilio\Rest\Client;
+
+$dotenv = Dotenv\Dotenv::createImmutable(__DIR__);
+$dotenv->load();
+
 
 function generateRandomOTP($length = 6)
 {
@@ -19,7 +27,8 @@ if (isset($_POST['action'])) {
 		$first_name = $_POST['first_name'];
 		$middle_name = $_POST['middle_name'];
 		$last_name = $_POST['last_name'];
-		$mobile_number = $_POST['mobile_number'];
+		// append +91 to mobile number
+		$mobile_number = "+92" . $_POST['mobile_number'];
 		$password = $_POST['signup_password'];
 
 		$result = mysqli_query($conn, "SELECT COUNT(*) AS count FROM users");
@@ -34,7 +43,32 @@ if (isset($_POST['action'])) {
 				$otp = generateRandomOTP();
 				$update_query = "UPDATE users SET PIN_Code='$otp' WHERE Surveyor_ID='$surveyor_id'";
 				mysqli_query($conn, $update_query);
-				$response = ['status' => 'success', 'message' => 'OTP is generated and sent to your mobile number.' . $otp, 'otp_active' => true, 'surveyor_id' => $surveyor_id];
+
+
+				// Your Account SID and Auth Token from twilio.com/console
+				$account_sid = $_ENV['TWILIO_ACCOUNT_SID'];
+				$auth_token = $_ENV['TWILIO_AUTH_TOKEN'];
+
+				// A Twilio phone number you purchased at twilio.com/console
+				$twilio_phone_number = $_ENV['TWILIO_PHONE_NUMBER'];
+
+				$client = new Client($account_sid, $auth_token);
+				try {
+					$client->messages->create(
+						$mobile_number,
+						array(
+							'from' => $twilio_phone_number,
+							'body' => 'Hello from px Finder! Your OTP is ' . $otp
+						)
+					);
+				} catch (Exception $e) {
+					$response = ['status' => 'error', 'message' => 'Failed to send OTP. Error: ' . $e->getMessage()];
+					echo json_encode($response);
+					exit;
+				}
+
+
+				$response = ['status' => 'success', 'message' => 'OTP is generated and sent to your mobile number.', 'otp_active' => true, 'surveyor_id' => $surveyor_id];
 			} else {
 				$response = ['status' => 'error', 'message' => "Error: " . $query . "<br>" . mysqli_error($conn)];
 			}

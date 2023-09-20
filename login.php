@@ -277,6 +277,15 @@
 			});
 
 			$('#verify_otp_button').on('click', function () {
+				// if otp is empty then show tostr message and return or if otp is not 6 digit then show tostr message and return
+				if ($('#otp').val() === '') {
+					toastr.error('OTP is required!');
+					return;
+				}
+				if ($('#otp').val().length !== 6) {
+					toastr.error('OTP must be 6 digit!');
+					return;
+				}
 				$('input[name="action"]').val('verify_otp');
 				ajaxFormSubmit('verify_otp');
 			});
