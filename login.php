@@ -16,6 +16,7 @@
 			display: flex;
 			justify-content: center;
 			align-items: center;
+			min-height: 100vh;
 		}
 
 		.main-container {
@@ -119,9 +120,21 @@
 
 					<div class="form-group">
 						<label for="mobile_number">Mobile Number (मोबाइल नंबर)</label>
-						<input type="text" id="mobile_number" name="mobile_number" class="form-control" required
-							pattern="[0-9]{10}" onkeypress="return isNumberKey(event)" oninput="validateInput(this)">
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"
+									style="background-color: white; border-right: none; padding-right: 5px;"><img
+										src="assets/dist/img/indiaFlag.png" alt="India Flag" width="20" height="20"
+										style="object-fit: contain;"></span>
+								<span class="input-group-text"
+									style="background-color: white; border-left: none; padding-left:1px;">+91</span>
+							</div>
+							<input type="text" id="mobile_number" name="mobile_number" class="form-control" required
+								pattern="[0-9]{10}" oninput="validateInput(this)" maxlength="10">
+						</div>
 					</div>
+
+
 					<div class="form-group">
 						<label for="signup_password">Password (पासवर्ड)</label>
 						<input type="password" id="signup_password" name="signup_password" class="form-control"
@@ -147,20 +160,33 @@
 			<div class="tab-pane fade section login-section" id="pills-login" role="tabpanel"
 				aria-labelledby="pills-login-tab">
 				<form id="login_form">
+
 					<div class="form-group">
 						<label for="login_mobile_number">Mobile Number (मोबाइल नंबर)</label>
-						<input type="text" id="login_mobile_number" name="login_mobile_number" class="form-control"
-							required>
-					</div>
-					<div class="form-group">
-						<label for="login_password">Password (पासवर्ड)</label>
-						<input type="password" id="login_password" name="login_password" class="form-control" required>
-					</div>
-					<button type="submit" id="login_button" class="btn btn-primary btn-block">Login (लॉग इन)</button>
-				</form>
+						<div class="input-group">
+							<div class="input-group-prepend">
+								<span class="input-group-text"
+									style="background-color: white; border-right: none; padding-right: 5px;"><img
+										src="assets/dist/img/indiaFlag.png" alt="India Flag" width="20" height="20"
+										style="object-fit: contain;"></span>
+								<span class="input-group-text"
+									style="background-color: white; border-left: none; padding-left:1px;">+91</span>
+							</div>
 
+							<input type="text" id="login_mobile_number" name="login_mobile_number" class="form-control"
+								pattern="[0-9]{10}" oninput="validateInput(this)" maxlength="10" required>
+						</div>
+					</div>
 			</div>
+			<div class="form-group">
+				<label for="login_password">Password (पासवर्ड)</label>
+				<input type="password" id="login_password" name="login_password" class="form-control" required>
+			</div>
+			<button type="submit" id="login_button" class="btn btn-primary btn-block">Login (लॉग इन)</button>
+			</form>
+
 		</div>
+	</div>
 	</div>
 	<a href="#" class="back-to-top"><i class="icofont-simple-up"></i></a>
 
