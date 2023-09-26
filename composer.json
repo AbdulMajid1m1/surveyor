@@ -1,6 +1,5 @@
 {
     "require": {
-        "twilio/sdk": "^7.9",
         "vlucas/phpdotenv": "^5.5"
     }
 }

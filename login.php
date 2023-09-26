@@ -141,20 +141,20 @@
 			<div class="tab-pane fade section signup-section" id="pills-signup" role="tabpanel"
 				aria-labelledby="pills-signup-tab">
 				<form id="user_form">
-					<div class="form-group">
+					<div class="form-group initial-signup-inputs">
 						<label for="first_name">First Name (पहला नाम)</label>
 						<input type="text" id="first_name" name="first_name" class="form-control" required>
 					</div>
-					<div class="form-group">
+					<div class="form-group initial-signup-inputs">
 						<label for="middle_name">Middle Name (मध्य नाम)</label>
 						<input type="text" id="middle_name" name="middle_name" class="form-control">
 					</div>
-					<div class="form-group">
+					<div class="form-group initial-signup-inputs">
 						<label for="last_name">Last Name (आखिरी नाम)</label>
 						<input type="text" id="last_name" name="last_name" class="form-control" required>
 					</div>
 
-					<div class="form-group">
+					<div class="form-group initial-signup-inputs">
 						<label for="mobile_number">Mobile Number (मोबाइल नंबर) </label>
 						<div class="input-group">
 							<div class="input-group-prepend">
@@ -172,11 +172,11 @@
 					</div>
 
 
-					<div class="form-group">
+					<!-- <div class="form-group">
 						<label for="signup_password">Password (पासवर्ड)</label>
 						<input type="password" id="signup_password" name="signup_password" class="form-control"
 							required>
-					</div>
+					</div> -->
 					<input type="hidden" name="action" value="save">
 					<button type="button" id="save_button" class="btn btn-primary btn-block">Save (सेव करें)</button>
 
@@ -188,7 +188,48 @@
 						<input type="hidden" name="surveyor_id" id="surveyor_id">
 						<button type="button" id="verify_otp_button" class="btn btn-secondary btn-block">Verify OTP
 							(ओटीपी सत्यापित करें)</button>
+
+
 					</div>
+
+
+
+
+
+
+					<div class="form-group" id="password_section" style="display: none;">
+						<label for="signup_password">Password (पासवर्ड)</label>
+						<div class="input-group">
+							<input type="password" id="signup_password" name="signup_password" class="form-control"
+								required>
+							<div class="input-group-append">
+								<span class="input-group-text password-toggle-icon"
+									onclick="togglePassword('signup_password')">
+									<i class="fa fa-eye" id="signup_password_icon"></i>
+								</span>
+							</div>
+						</div>
+					</div>
+					<div class="form-group" id="confirm_password_section" style="display: none;">
+						<label for="confirm_password">Confirm Password (पासवर्ड की पुष्टि करें)</label>
+						<div class="input-group">
+							<input type="password" id="confirm_password" name="confirm_password" class="form-control"
+								required>
+							<div class="input-group-append">
+								<span class="input-group-text password-toggle-icon"
+									onclick="togglePassword('confirm_password')">
+									<i class="fa fa-eye" id="confirm_password_icon"></i>
+								</span>
+							</div>
+						</div>
+					</div>
+					<!-- create password button seciotn with green btn -->
+					<div id="save_password_button_div" style="display: none;">
+						<button type="button" id="save_password_button" class="btn btn-primary btn-block">Save Password
+							(पासवर्ड सेव करें)</button>
+					</div>
+
+
 
 					<div id="error_message" class="alert alert-danger" style="display: none;"></div>
 				</form>
@@ -238,6 +279,19 @@
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
 	<script>
+		function togglePassword(fieldId) {
+			const passwordField = document.getElementById(fieldId);
+			const passwordIcon = document.getElementById(`${fieldId}_icon`);
+			if (passwordField.type === 'password') {
+				passwordField.type = 'text';
+				passwordIcon.classList.replace('fa-eye', 'fa-eye-slash');
+			} else {
+				passwordField.type = 'password';
+				passwordIcon.classList.replace('fa-eye-slash', 'fa-eye');
+			}
+		}
+
+
 		function isNumberKey(evt) {
 			var charCode = (evt.which) ? evt.which : event.keyCode
 			if (charCode > 31 && (charCode < 48 || charCode > 57))
@@ -328,6 +382,29 @@
 				ajaxFormSubmit('verify_otp');
 			});
 
+			// create click event for save password button
+			$('#save_password_button').on('click', function () {
+				// if password is empty then show tostr message and return or if password is not 6 digit then show tostr message and return
+				if ($('#signup_password').val() === '') {
+					toastr.error('Password is required!');
+					return;
+				}
+				if ($('#signup_password').val().length < 6) {
+					toastr.error('Password must be 6 digit!');
+					return;
+				}
+				if ($('#confirm_password').val() === '') {
+					toastr.error('Confirm password is required!');
+					return;
+				}
+				if ($('#signup_password').val() !== $('#confirm_password').val()) {
+					toastr.error('Password and confirm password must be same!');
+					return;
+				}
+				$('input[name="action"]').val('save_password');
+				ajaxFormSubmit('save_password');
+			});
+
 			function ajaxFormSubmit(action) {
 				start_load();
 				$.ajax({
@@ -336,6 +413,8 @@
 					data: $('#user_form').serialize(),
 					dataType: 'json',
 					success: function (response) {
+						console.log("error reponse")
+						console.log(response)
 						if (response.status === 'error') {
 							end_load();
 							toastr.error(response.message);
@@ -349,17 +428,39 @@
 							// hide the save button
 							$('#save_button').hide();
 							$('#otp_section').show();
+							$('.initial-signup-inputs').hide();
 							$('#surveyor_id').val(response.surveyor_id);
 						} else if (response.status === 'verified') {
+							end_load();
+							toastr.success(response.message);
+							// setTimeout(function () {
+							// 	window.location.href = 'index.php';
+							// }, 1000);
+							$('#otp_section').hide();
+							$('#password_section').show();
+							$('#confirm_password_section').show();
+							$('#save_password_button_div').show();
+
+
+
+
+						} else if (response.status === 'password_saved') {
 							end_load();
 							toastr.success(response.message);
 							setTimeout(function () {
 								window.location.href = 'index.php';
 							}, 1000);
+						} else {
+							end_load();
+							toastr.error('Something went wrong!');
+
 						}
+
 					},
+
 					error: function (jqXHR, textStatus, errorThrown) {
 						console.log(textStatus, errorThrown);
+						console.log("error")
 						end_load();
 						if (textStatus === 'parsererror') {
 							try {
