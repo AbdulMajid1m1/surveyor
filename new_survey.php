@@ -114,43 +114,43 @@ if (isset($mode) && $mode === 'edit') {
 	}
 } else {
 	$id = '';
-	$mode = 'new';
-	$first_name = 'Abdul';
-	$middle_name = 'view only';
-	$last_name = 'Majid';
-	$education = 'Education';
-	$firm_name = 'Firm';
-	$address = '123 Street, City';
-	$gps_coordinates = 'Latitude, Longitude';
-	$contact_number_1 = '123-456-7890';
-	$contact_number_2 = '987-654-3210';
-	$email_id = 'email@example.com';
+	$mode = '';
+	$first_name = '';
+	$middle_name = '';
+	$last_name = '';
+	$education = '';
+	$firm_name = '';
+	$address = '';
+	$gps_coordinates = '';
+	$contact_number_1 = '';
+	$contact_number_2 = '';
+	$email_id = '';
 	$license_status = 'owned'; // Default to 'owned'
 	$lic_holder_name = '';
-	$relation = 'Relation';
-	$validity = '2023-09-13'; // Default date value
-	$business_age = '5';
-	$total_investment = '50000';
-	$total_investment_inventory = '20000';
-	$avg_sale_per_day = '1000';
-	$avg_expenses_per_day = '500';
-	$inventory_rotation = '10';
-	$avg_shelf_life = '30';
-	$max_stock_wait_days = '7';
-	$unsellable_stock_count = '20';
-	$unsellable_stock_cost = '100';
-	$computer_at_shop = 'Yes'; // Default to 'Yes'
-	$internet_available = 'Yes'; // Default to 'Yes'
-	$inventory_management_software = 'Software';
-	$shop_area = '2000';
-	$sale_dependency = 'High'; // Default to 'High'
-	$hospitals_5km = '5';
-	$hospitals_list = 'Hospital 1, Hospital 2';
-	$distributors_per_month = '10';
-	$discount_range = '5-10%';
-	$conditions_for_discount = 'None';
-	$shop_open_time = '08:00';
-	$shop_close_time = '20:00';
+	$relation = '';
+	$validity = ''; // Default date value
+	$business_age = '';
+	$total_investment = '';
+	$total_investment_inventory = '';
+	$avg_sale_per_day = '';
+	$avg_expenses_per_day = '';
+	$inventory_rotation = '';
+	$avg_shelf_life = '';
+	$max_stock_wait_days = '';
+	$unsellable_stock_count = '';
+	$unsellable_stock_cost = '';
+	$computer_at_shop = ''; // Default to 'Yes'
+	$internet_available = ''; // Default to 'Yes'
+	$inventory_management_software = '';
+	$shop_area = '';
+	$sale_dependency = ''; // Default to 'High'
+	$hospitals_5km = '';
+	$hospitals_list = '';
+	$distributors_per_month = '';
+	$discount_range = '';
+	$conditions_for_discount = '';
+	$shop_open_time = '';
+	$shop_close_time = '';
 	$chemistImage = '';
 	$shopImage = '';
 	$button_text = 'Save (सहेजें)'; // Button text for saving data
@@ -572,6 +572,17 @@ if (isset($mode) && $mode === 'edit') {
 		box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 
 
+	}
+
+	.form-group {
+		padding-right: 10% !important;
+	}
+
+	/* // media query for mobile */
+	@media (max-width: 768px) {
+		.form-group {
+			padding-right: 0% !important;
+		}
 	}
 
 	.custom-btn {

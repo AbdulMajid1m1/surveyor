@@ -20,7 +20,7 @@
 		}
 
 		.main-container {
-			max-width: 600px;
+			max-width: 500px;
 			width: 100%;
 			background: #fff;
 			border-radius: 10px;

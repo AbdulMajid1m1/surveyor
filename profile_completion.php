@@ -106,7 +106,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'profile_information') {
 
                             <form id="profile_form" enctype="multipart/form-data" onsubmit="handleSubmit(event)">
                                 <?php if ($readOnly == false) { ?>
-                                    <div class="form-group">
+                                    <div class="form-group uploaded-img">
                                         <label for="photo">Profile Picture (प्रोफ़ाइल तस्वीर)*</label>
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="photo" name="photo" required
@@ -121,7 +121,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'profile_information') {
 
                                 <?php } else { ?>
                                     <!-- show image using src  $image -->
-                                    <img id="preview" src="<?php echo $image; ?>" alt="Uploaded Image"
+                                    <img id="preview" src="<?php echo $image; ?>" alt="Uploaded Image" class="uploaded-img"
                                         style="display:block; width:100px; height:100px; margin-top:10px;" />
                                 <?php } ?>
 
@@ -266,6 +266,19 @@ if (isset($_GET['action']) && $_GET['action'] === 'profile_information') {
             background-color: #f8cbad;
             box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 
+
+
+            width: 85%;
+
+            margin: 0 auto;
+        }
+
+        .form-group {
+            padding: 0 1.25rem;
+        }
+
+        .uploaded-img {
+            margin-left: 1.25rem !important
         }
 
         .btn-file {
@@ -286,6 +299,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'profile_information') {
             background: red;
             cursor: inherit;
             display: block;
+
         }
 
         .parent-component {
@@ -294,7 +308,20 @@ if (isset($_GET['action']) && $_GET['action'] === 'profile_information') {
             align-items: center;
         }
 
+
         /*  media query  */
+        @media (max-width: 768px) {
+            .form-group {
+                padding: 0 0rem;
+            }
+
+            .uploaded-img {
+                margin-left: 0 !important
+            }
+
+
+        }
+
         @media (max-width: 500px) {
             body {
                 background-color: #f8cbad;
