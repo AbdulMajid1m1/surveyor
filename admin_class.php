@@ -27,7 +27,7 @@ class Action
 	{
 		extract($_POST);
 		// append +91 to mobile number
-		$login_mobile_number = "+91" . $_POST['login_mobile_number'];
+		$login_mobile_number = "+92" . $_POST['login_mobile_number'];
 		$qry = $this->db->query("SELECT * FROM users where Mobile_Number = '" . $login_mobile_number . "' and password = '" . md5($login_password) . "' ");
 		if ($qry->num_rows > 0) {
 			$user = $qry->fetch_array();

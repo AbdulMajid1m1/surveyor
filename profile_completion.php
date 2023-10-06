@@ -278,7 +278,7 @@ if (isset($_GET['action']) && $_GET['action'] === 'profile_information') {
         }
 
         .uploaded-img {
-            margin-left: 1.25rem !important
+            /* margin-left: 1.25rem !important */
         }
 
         .btn-file {

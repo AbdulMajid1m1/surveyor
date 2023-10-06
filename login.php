@@ -171,6 +171,10 @@
 						</div>
 					</div>
 
+					<div class="form-group initial-signup-inputs">
+						<div id="recaptcha-container"></div>
+					</div>
+
 
 					<!-- <div class="form-group">
 						<label for="signup_password">Password (पासवर्ड)</label>
@@ -379,7 +383,14 @@
 					return;
 				}
 				$('input[name="action"]').val('verify_otp');
-				ajaxFormSubmit('verify_otp');
+				codeverify().then(optVerification => {
+					if (optVerification.status) {
+						ajaxFormSubmit('verify_otp');
+					} else {
+						toastr.error(optVerification?.error?.message || 'Something went wrong!');
+					}
+				});
+
 			});
 
 			// create click event for save password button
@@ -423,13 +434,21 @@
 								$('#surveyor_id').val(response.surveyor_id);
 							}
 						} else if (response.status === 'success') {
-							end_load();
-							toastr.success(response.message);
-							// hide the save button
-							$('#save_button').hide();
-							$('#otp_section').show();
-							$('.initial-signup-inputs').hide();
-							$('#surveyor_id').val(response.surveyor_id);
+							const checkphoneAuth = phoneAuth();
+							phoneAuth().then(checkphoneAuth => {
+								if (!checkphoneAuth.status) {
+									end_load();
+									toastr.error(checkphoneAuth?.error?.message || 'Something went wrong!');
+									return;
+								}
+								end_load();
+								toastr.success(response.message);
+								// hide the save button
+								$('#save_button').hide();
+								$('#otp_section').show();
+								$('.initial-signup-inputs').hide();
+								$('#surveyor_id').val(response.surveyor_id);
+							});
 						} else if (response.status === 'verified') {
 							end_load();
 							toastr.success(response.message);
@@ -491,6 +510,24 @@
 		});
 	</script>
 	<?php include 'footer.php' ?>
+
+	<script src="https://www.gstatic.com/firebasejs/8.3.1/firebase.js"></script>
+	<script>
+
+		const firebaseConfig = {
+			apiKey: "AIzaSyBe6f6Ud8yt7V1Yb-MN3vPbWoJwYMkHcqk",
+			authDomain: "survey-6588b.firebaseapp.com",
+			projectId: "survey-6588b",
+			storageBucket: "survey-6588b.appspot.com",
+			messagingSenderId: "1035313128692",
+			appId: "1:1035313128692:web:67ec7d9d4f7dfcd5a7eaa1",
+			measurementId: "G-866GK1R0TF"
+		};
+
+		firebase.initializeApp(firebaseConfig);
+		firebase.analytics();
+	</script>
+	<script src="firebase.js" type="text/javascript"></script>
 </body>
 
 </html>
